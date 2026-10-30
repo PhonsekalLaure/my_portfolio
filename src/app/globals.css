@@ -1060,6 +1060,30 @@ h2 {
   margin-top: 16px;
   font-size: 18px;
 }
+.credential-kind {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-size: 10px;
+}
+.certificate .credential-expiry {
+  font-size: 11px;
+}
+.education {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+.education + p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
 .certificate p {
   color: var(--muted);
   font-size: 12px;
@@ -1302,6 +1326,42 @@ h2 {
 .next-project:hover {
   color: var(--accent);
 }
+.preview-window {
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.preview-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.preview-toolbar > span {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.preview-toolbar .text-link {
+  color: var(--accent);
+}
+.preview-window iframe {
+  display: block;
+  width: 100%;
+  height: clamp(440px, 65vh, 650px);
+  border: 0;
+  background: #fff;
+  color-scheme: light;
+}
+.project-preview .preview-help {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
 .project-gallery img {
   width: 100%;
   height: auto;
@@ -1309,12 +1369,26 @@ h2 {
   border: 1px solid var(--line);
 }
 .project-gallery figure {
-  margin: 25px 0;
+  margin: 30px 0;
+}
+.project-gallery figure > a {
+  display: block;
+  border-radius: 9px;
 }
 .project-gallery figcaption {
-  margin-top: 8px;
-  font-size: 11px;
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.8;
   color: var(--muted);
+}
+.project-gallery figcaption h3 {
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.project-gallery figcaption .text-link {
+  margin-top: 8px;
+  color: var(--accent);
 }
 .not-found {
   padding-block: 120px;

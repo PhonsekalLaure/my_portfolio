@@ -3,6 +3,7 @@ import type { Project } from "./types";
 import { profile } from "./profile";
 import { unverified } from "./verification";
 import { projectActivity } from "./project-activity";
+import { prismGuardScreenshots } from "./project-screenshots";
 
 const github = profile.github;
 
@@ -42,7 +43,10 @@ export const projects = [
         "Attendance evidence needs to make sense on both sides of the workflow: the guard submitting it on mobile and the administrator reviewing it on the web. My changes connect those submission and review surfaces while preserving their different responsibilities.",
     },
     links: [
-      { label: "Web preview", href: "https://prism-guard.vercel.app/" },
+      {
+        label: "Web app (login required)",
+        href: "https://prism-guard.vercel.app/",
+      },
       { label: "Promotional site", href: "https://psiai.vercel.app/" },
       { label: "Web repository", href: `${github}/prism-guard-web` },
       { label: "Mobile repository", href: `${github}/prism-guard-mobile` },
@@ -64,7 +68,13 @@ export const projects = [
       nodes: ["Guard mobile app", "Application API", "Agency web app"],
       caption: "A simplified workflow diagram, not an application screenshot.",
     },
-    screenshots: [],
+    screenshots: prismGuardScreenshots,
+    preview: {
+      title: "Promotional website",
+      url: "https://psiai.vercel.app/",
+      description:
+        "Explore the public promotional website. The PRISM-GUARD operations app is separate and requires an account.",
+    },
     evidence: {
       verifiedOn: "2026-10-30",
       note: "Reviewed public repository manifests, live authored commit diffs, and merged web PR #76, mobile PR #27, and promotional PR #7 using authenticated GitHub CLI. Public repository homepage URLs resolve to the listed web and promotional pages; this is URL availability, not full end-to-end deployment verification. Team ownership remains explicit.",

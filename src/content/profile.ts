@@ -1,7 +1,7 @@
 import "server-only";
-import type { Publication } from "./types";
+import type { Profile } from "./types";
 
-export const profile = {
+export const profile: Profile = {
   name: "Ronn Saimund Rosarito",
   shortName: "Ronn Rosarito",
   initials: "rr",
@@ -12,15 +12,20 @@ export const profile = {
   description:
     "Ronn Saimund Rosarito’s developer portfolio. Explore web and mobile projects, individual contributions, and collaborative development work.",
   github: "https://github.com/PhonsekalLaure",
-  linkedin: undefined as string | undefined,
-  email: undefined as string | undefined,
-  resume: undefined as string | undefined,
-  location: { publication: "draft" as Publication, value: "Philippines" },
+  linkedin: "https://www.linkedin.com/in/rsrosarito/",
+  email: "rosaritoronnsaimund@gmail.com",
+  secondaryEmail: "rurosarito@fit.edu.ph",
+  resume: "/assets/resume.pdf",
+  location: {
+    publication: "published",
+    value: "Sampaloc, Manila, Philippines",
+  },
   education: {
-    publication: "draft" as Publication,
-    school: "",
-    program: "",
-    graduation: "",
+    publication: "published",
+    school: "FEU Institute of Technology",
+    program:
+      "Bachelor of Science in Information Technology, Specialization in Web and Mobile Applications",
+    graduation: "Expected July 2027",
   },
   about: [
     "I’m an Information Technology student who enjoys making complicated workflows easier to navigate. My projects explore the space where thoughtful interfaces meet dependable application logic.",

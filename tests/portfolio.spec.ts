@@ -1,6 +1,17 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+// Keep portfolio checks independent of changes or outages on the external site.
+// The live promotional embed is checked separately in a browser review.
+test.beforeEach(async ({ page }) => {
+  await page.route("https://psiai.vercel.app/**", (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: '<!doctype html><html lang="en"><head><title>Promotional preview</title></head><body><main><h1>Promotional website preview</h1></main></body></html>',
+    }),
+  );
+});
+
 test("published content is accessible, responsive, and excludes drafts", async ({
   page,
 }, testInfo) => {
@@ -21,17 +32,9 @@ test("published content is accessible, responsive, and excludes drafts", async (
     "Marlo522’s repository",
   );
   await expect(page.locator("#contributions")).toContainText("Merged PR #1");
-  await expect(page.locator("#contributions")).toContainText(
-    "domadla’s repository",
-  );
-  await expect(page.locator("#contributions")).toContainText(
-    "Merged PRs #67 & #72",
-  );
-  await expect(page.locator("#certifications")).toHaveCount(0);
+  await expect(page.locator("#certifications")).toBeVisible();
   const html = await response!.text();
   for (const privateText of [
-    "IT Specialist",
-    "PMI Project",
     "Frighton University Library Management System",
     "Awaiting owner-supplied",
     "verifiedOn",
@@ -57,6 +60,60 @@ test("published content is accessible, responsive, and excludes drafts", async (
     fullPage: true,
   });
   expect(errors).toEqual([]);
+});
+
+test("supplied profile links, credentials, and resume are usable", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  await expect(
+    page.getByRole("link", { name: "LinkedIn", exact: true }),
+  ).toHaveAttribute("href", /^https:\/\/www\.linkedin\.com\/in\//);
+  const emails = await page
+    .locator('a[href^="mailto:"]')
+    .evaluateAll((links) => [
+      ...new Set(links.map((link) => link.getAttribute("href")!.slice(7))),
+    ]);
+  expect(emails.length).toBeGreaterThanOrEqual(2);
+  for (const email of emails)
+    expect(email).toMatch(/^[^\s@|]+@[^\s@|]+\.[^\s@|]+$/);
+  await expect(page.locator("#about")).toContainText(
+    "FEU Institute of Technology",
+  );
+  await expect(page.locator("#about")).toContainText("Expected July 2027");
+  await expect(
+    page.getByRole("link", { name: "Resume", exact: true }),
+  ).toHaveAttribute("href", "/assets/resume.pdf");
+  const resume = await request.get("/assets/resume.pdf");
+  expect(resume.ok()).toBe(true);
+  expect(resume.headers()["content-type"]).toContain("application/pdf");
+  expect((await resume.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  const certificates = page.locator("#certifications article");
+  expect(await certificates.count()).toBeGreaterThanOrEqual(8);
+  for (const card of await certificates.all()) {
+    await expect(card.locator(".credential-kind")).toHaveText(
+      /^(Certification|Course completion)$/,
+    );
+    await expect(
+      card.getByRole("link", { name: "Verify credential" }),
+    ).toHaveAttribute("href", /^https:\/\/www\.credly\.com\/badges\//);
+  }
+  const devnet = certificates.filter({
+    has: page.getByRole("heading", { name: "DevNet Associate", exact: true }),
+  });
+  await expect(devnet.locator(".credential-kind")).toHaveText(
+    "Course completion",
+  );
+  const ccst = certificates.filter({
+    has: page.getByRole("heading", {
+      name: /Cisco Certified Support Technician/,
+    }),
+  });
+  await expect(ccst.locator(".credential-kind")).toHaveText("Certification");
+  await expect(
+    certificates.filter({ hasText: "PMI Project Management Ready" }),
+  ).toContainText("Valid until Mar 17, 2031");
 });
 
 test("theme follows the system until an explicit preference is saved", async ({
@@ -153,6 +210,54 @@ test("case studies render and unpublished or unknown projects return 404", async
   for (const [index, route] of routes.entries()) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
+    if (route === "/projects/prism-guard") {
+      const preview = page.locator(".project-preview");
+      await preview.scrollIntoViewIfNeeded();
+      await expect(
+        preview.getByRole("link", { name: "Open website" }),
+      ).toHaveAttribute("href", "https://psiai.vercel.app/");
+      await expect(
+        page
+          .frameLocator(
+            'iframe[title="Promotional website — interactive preview"]',
+          )
+          .getByRole("heading", { name: "Promotional website preview" }),
+      ).toBeVisible();
+      await expect(
+        page.locator('iframe[src*="prism-guard.vercel.app"]'),
+      ).toHaveCount(0);
+      const gallery = page.locator(".project-gallery");
+      await expect(gallery.locator("figure")).toHaveCount(4);
+      for (const image of await gallery.locator("img").all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect(image).toBeVisible();
+        await expect
+          .poll(() =>
+            image.evaluate(
+              (node) =>
+                node instanceof HTMLImageElement &&
+                node.complete &&
+                node.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+      }
+      const fullSize = gallery
+        .getByRole("link", { name: "View full-size image", exact: true })
+        .first();
+      const [imageTab] = await Promise.all([
+        page.waitForEvent("popup"),
+        fullSize.click(),
+      ]);
+      await imageTab.waitForLoadState();
+      await expect(imageTab).toHaveURL(
+        /\/assets\/projects\/prism-guard\/web\/payroll-management\.png$/,
+      );
+      await imageTab.close();
+    } else {
+      await expect(page.locator(".project-preview")).toHaveCount(0);
+      await expect(page.locator(".project-gallery")).toHaveCount(0);
+    }
     await expect(
       page.getByRole("heading", { name: "My contribution", exact: true }),
     ).toBeVisible();

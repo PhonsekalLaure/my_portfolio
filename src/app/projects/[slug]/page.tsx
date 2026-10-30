@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getPublishedProject, getPublishedProjects } from "@/content/portfolio";
 import { ProjectVisual } from "@/components/project-visual";
 import { ProjectActivity } from "@/components/project-activity";
+import { ProjectPreview } from "@/components/project-preview";
 import { Icon } from "@/components/icons";
 import { LinkList, ProjectGallery } from "@/components/sections";
 import { getSiteUrl } from "@/lib/site";
@@ -121,6 +122,7 @@ export default async function ProjectPage({
             <h2>{project.challenge.title}</h2>
             <p>{project.challenge.description}</p>
           </section>
+          <ProjectPreview preview={project.preview} />
           <ProjectGallery screenshots={project.screenshots} />
           <ProjectActivity items={project.activity} />
         </div>

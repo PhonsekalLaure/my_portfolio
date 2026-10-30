@@ -27,33 +27,4 @@ export const contributions = [
       ],
     },
   },
-  {
-    publication: "published",
-    project: "AD-SolarSoil",
-    owner: "domadla",
-    title: "Admin actions & account updates",
-    summary:
-      "Contributed plant-editing actions, username uniqueness checks, password-change handling, and profile feedback alongside other developers.",
-    technologies: ["PHP", "JavaScript"],
-    status: "Merged PRs #67 & #72",
-    links: [
-      {
-        label: "Admin actions PR #67",
-        href: "https://github.com/domadla/AD-SolarSoil/pull/67",
-      },
-      {
-        label: "Account updates PR #72",
-        href: "https://github.com/domadla/AD-SolarSoil/pull/72",
-      },
-      { label: "Repository", href: "https://github.com/domadla/AD-SolarSoil" },
-    ],
-    evidence: {
-      verifiedOn: "2026-10-30",
-      note: "Both public PRs are merged and authored by PhonsekalLaure. Reviewed file diffs and individual commit authors. These PRs contain work by other contributors, so descriptions are limited to PhonsekalLaure's plant actions, username validation, password changes, and profile feedback. This is a different repository from Marlo522/solarsoil.",
-      references: [
-        "https://github.com/domadla/AD-SolarSoil/pull/67",
-        "https://github.com/domadla/AD-SolarSoil/pull/72",
-      ],
-    },
-  },
 ] satisfies Contribution[];

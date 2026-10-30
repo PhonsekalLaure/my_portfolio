@@ -17,32 +17,39 @@ Open http://localhost:3000. No database, API keys, authentication, or environmen
 
 Edit the appropriate file in **`src/content/`**:
 
-| File                  | Content                                                                                 |
-| --------------------- | --------------------------------------------------------------------------------------- |
-| `profile.ts`          | Personal details, social/contact links, resume, education, About copy, and principles   |
-| `projects.ts`         | Project descriptions, individual contributions, technologies, evidence, and screenshots |
-| `project-activity.ts` | Curated authored commits and merged pull requests shown on project pages                |
-| `contributions.ts`    | Contributions to other developers' repositories                                         |
-| `skills.ts`           | Skill groups and their supporting evidence                                              |
-| `certifications.ts`   | Certification names, issuers, dates, and publication status                             |
-| `verification.ts`     | Shared verification date and the default unverified evidence record                     |
-| `types.ts`            | Shared TypeScript content types                                                         |
+| File                     | Content                                                                                 |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `profile.ts`             | Personal details, social/contact links, resume, education, About copy, and principles   |
+| `projects.ts`            | Project descriptions, individual contributions, technologies, evidence, and screenshots |
+| `project-activity.ts`    | Curated authored commits and merged pull requests shown on project pages                |
+| `project-screenshots.ts` | Selected PRISM-GUARD screenshot paths, dimensions, titles, and captions                 |
+| `contributions.ts`       | Contributions to other developers' repositories                                         |
+| `skills.ts`              | Skill groups and their supporting evidence                                              |
+| `certifications.ts`      | Certification names, issuers, dates, and publication status                             |
+| `verification.ts`        | Shared verification date and the default unverified evidence record                     |
+| `types.ts`               | Shared TypeScript content types                                                         |
 
 `portfolio.ts` assembles these sections and provides the existing publication, navigation, and social-link helpers. Page and component imports can continue using it. All modules containing content remain server-only; do not import them into client components or pass entire records into them.
 
 - Set a record's `publication` to `published` only after reviewing its claims and evidence. Draft projects have no public route and are absent from HTML, navigation, metadata, and the sitemap.
-- Profile email, LinkedIn, and resume start unset. Add only an explicitly supplied public address, an exact verified profile URL, and the final owner-provided PDF. Their links appear automatically.
+- Profile email, secondary academic email, LinkedIn, education, location, and resume have been supplied by the owner. Email fields each contain one address; `linkedin` needs a full HTTPS URL. The resume is available at `/assets/resume.pdf`. `profile.ts` is checked against the shared `Profile` type so invalid publication states are caught by TypeScript.
 - Education and location have their own publication controls. Location is hidden by default.
-- Confirm certificate name, issuer, and year against the original certificate before publishing. Public credential IDs are not needed; include verification URLs only when approved for public sharing.
+- Confirm certificate name, issuer, and year against the original record before publishing. `kind` distinguishes professional certifications from course completions; optional `expiresOn` uses `YYYY-MM-DD`. Public exam credential IDs are not needed. Use public verification links only.
 - Put approved, redacted screenshots in `public/assets/` and populate the project's `screenshots` array with local path, alt text, width, and height. Images render through `next/image`. Everything under `public/` is publicly accessible.
 - Put the final resume in `public/assets/` and set `profile.resume` to its path. There is no placeholder resume.
 - Empty content sections and their navigation links are omitted automatically. There is no contact form.
 
-The published content features PRISM-GUARD, Frighton University SIS, and ITSO Equipment Management, with separate external contributions to Marlo522/solarsoil and domadla/AD-SolarSoil. Public repositories, authored changes, and selected merged PRs were reviewed through authenticated GitHub CLI on 2026-10-30. Each project has a curated Selected changes section with direct commit/PR links; activity dates come from GitHub author dates or PR merge dates. Shared PRs are described using the user's individual changes, rather than all team output. No production-readiness or quantified outcome claims are made. Certifications and the Frighton Library Management System remain drafts.
+The published content features PRISM-GUARD, Frighton University SIS, and ITSO Equipment Management, with a separate external contribution to Marlo522/solarsoil. Public repositories, authored changes, and selected merged PRs were reviewed through authenticated GitHub CLI on 2026-10-30. Each project has a curated Selected changes section with direct commit/PR links; activity dates come from GitHub author dates or PR merge dates. Shared PRs are described using the user's individual changes, rather than all team output. No production-readiness or quantified outcome claims are made. The Frighton Library Management System remains a draft.
+
+Eight owner-supplied credentials were verified on 2026-10-30 against Credly's public pages, Open Badges assertions, and issuer badge classes. All eight public pages name Ronn Saimund Rosarito. The four professional certifications are IT Specialist - Python, IT Specialist - Databases, PMI Project Management Ready, and Cisco CCST Networking - Lifetime. DevNet Associate and the three CCNA-named badges are course completions. PMI expires on 2031-03-17; the linked CCST badge is the Lifetime version. Verification references are stored in the server-only credential records.
 
 The PRISM-GUARD web and promotional links were taken from public repository homepage metadata and checked for successful redirects. These are public previews; a successful page response does not establish that every backend workflow is available. No GitHub API calls, credentials, or live contribution counters are needed at runtime. See `docs/project-evidence.md` for the content review record.
 
 Project illustrations are simplified workflow diagrams, not screenshots or live dashboards.
+
+PRISM-GUARD's case study embeds the public promotional site at `https://psiai.vercel.app/` in a responsive, lazy-loaded iframe with an Open website fallback link. Edit the optional `preview` object in `projects.ts` to change its title, URL, or description. Only add sites that permit embedding. The operations app requires an account and blocks framing; its security headers have not been changed.
+
+The case study also includes four owner-supplied screenshots: web payroll and client management, mobile earnings, and mobile profile/documents. The owner confirmed the visible names, contact details, and amounts are demo data and safe to publish. Selected files are in `public/assets/projects/prism-guard/web/` and `mobile/`, with editable records in `src/content/project-screenshots.ts`. Original pixels and dimensions are preserved. Images are optimized through `next/image` and link to the full-size PNG. The other 26 screenshots are renamed and retained locally under `.asset-sources/prism-guard/web/` and `mobile/`, outside public assets and ignored by Git. Back up that local folder separately if needed; it will not be included in a clone. Other projects' empty galleries remain hidden.
 
 ## Project structure
 

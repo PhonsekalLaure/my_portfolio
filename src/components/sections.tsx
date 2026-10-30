@@ -233,17 +233,35 @@ export function Certifications({
 }) {
   return (
     <section className="container section" id="certifications">
-      <SectionHeading eyebrow="Continued learning" title="Certifications" />
+      <SectionHeading
+        eyebrow="Continued learning"
+        title="Certifications & training"
+        description="Professional certifications and completed courses, with public credential records."
+      />
       <div className="certification-grid">
         {certifications.map((certificate) => (
           <article className="certificate" key={certificate.name}>
             <Icon name="shield" size={25} />
             <h3>{certificate.name}</h3>
+            {certificate.kind && (
+              <span className="credential-kind">{certificate.kind}</span>
+            )}
             {(certificate.issuer || certificate.year) && (
               <p>
                 {[certificate.issuer, certificate.year]
                   .filter(Boolean)
                   .join(" · ")}
+              </p>
+            )}
+            {certificate.expiresOn && (
+              <p className="credential-expiry">
+                Valid until{" "}
+                {new Intl.DateTimeFormat("en", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  timeZone: "UTC",
+                }).format(new Date(`${certificate.expiresOn}T00:00:00Z`))}
               </p>
             )}
             {certificate.verificationUrl && (
@@ -333,13 +351,15 @@ export function Contact() {
               icon={
                 link.label === "GitHub"
                   ? "github"
-                  : link.label === "Email"
+                  : link.href.startsWith("mailto:")
                     ? "mail"
                     : "external"
               }
             >
-              {link.label === "Email"
-                ? "Send an email"
+              {link.href.startsWith("mailto:")
+                ? link.label === "Email"
+                  ? "Send an email"
+                  : link.label
                 : `Find me on ${link.label}`}
             </ExternalLink>
           ))}
@@ -372,17 +392,38 @@ export function ProjectGallery({
 }) {
   if (!screenshots.length) return null;
   return (
-    <section className="case-section">
+    <section className="case-section screenshot-section">
       <h2>A closer look</h2>
+      <p>Selected project screens. Open an image to view it at full size.</p>
       <div className="project-gallery">
         {screenshots.map((image) => (
           <figure key={image.src}>
-            <Image
-              {...image}
-              alt={image.alt}
-              sizes="(max-width: 800px) 100vw, 900px"
-            />
-            <figcaption>{image.alt}</figcaption>
+            <a
+              href={image.src}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View full-size image: ${image.title || image.alt}`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                sizes="(max-width: 800px) 100vw, 900px"
+              />
+            </a>
+            <figcaption>
+              {image.title && <h3>{image.title}</h3>}
+              <p>{image.caption || image.alt}</p>
+              <a
+                href={image.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link"
+              >
+                View full-size image <Icon name="external" size={15} />
+              </a>
+            </figcaption>
           </figure>
         ))}
       </div>

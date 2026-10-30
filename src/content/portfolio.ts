@@ -8,9 +8,11 @@ import type { Certification, PortfolioLink } from "./types";
 
 export type {
   Publication,
+  Profile,
   PortfolioLink,
   Project,
   ProjectActivity,
+  ProjectScreenshot,
   Contribution,
   Certification,
   SkillGroup,
@@ -47,12 +49,20 @@ export function getPublishedCertifications(): Certification[] {
 }
 export function getSocialLinks(): PortfolioLink[] {
   return [
+    ...(portfolio.profile.email
+      ? [{ label: "Email", href: `mailto:${portfolio.profile.email}` }]
+      : []),
+    ...(portfolio.profile.secondaryEmail
+      ? [
+          {
+            label: "Academic email",
+            href: `mailto:${portfolio.profile.secondaryEmail}`,
+          },
+        ]
+      : []),
     { label: "GitHub", href: portfolio.profile.github },
     ...(portfolio.profile.linkedin
       ? [{ label: "LinkedIn", href: portfolio.profile.linkedin }]
-      : []),
-    ...(portfolio.profile.email
-      ? [{ label: "Email", href: `mailto:${portfolio.profile.email}` }]
       : []),
   ];
 }

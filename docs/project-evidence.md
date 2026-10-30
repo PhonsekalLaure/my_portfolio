@@ -13,14 +13,19 @@ Reviewed public source, repository manifests, authored commit history, selected 
 ## External contributions
 
 - **Marlo522/solarsoil:** [PR #1](https://github.com/Marlo522/solarsoil/pull/1) is merged and authored by PhonsekalLaure. It supports authentication/guest filters, role-aware redirects, and unauthorized-access handling. Do not imply ownership of the application.
-- **domadla/AD-SolarSoil:** [PR #67](https://github.com/domadla/AD-SolarSoil/pull/67) and [PR #72](https://github.com/domadla/AD-SolarSoil/pull/72) are merged and authored by PhonsekalLaure, but include commits by other developers. Individual commit authorship supports the narrower claims of plant-editing/admin actions, username uniqueness checks, password-change handling, and profile feedback. Do not attribute the entire admin or profile implementation to one person. This repository is distinct from Marlo522/solarsoil.
 
 ## Public previews
 
 - The web repository homepage redirects from `https://prism-guard-web.vercel.app` to `https://prism-guard.vercel.app/` with an HTTP 200 response.
 - The promotional repository homepage redirects from `https://prism-guard-promo.vercel.app` to `https://psiai.vercel.app/` with an HTTP 200 response.
 
-These checks establish URL availability, not end-to-end backend behavior. No accounts were used to submit forms, log in, or mutate project data. No project screenshots have been approved for portfolio publication; the current graphics remain labeled workflow diagrams.
+These checks establish URL availability, not end-to-end backend behavior. No accounts were used to submit forms, log in, or mutate project data. The public promotional site is embedded in the case study; workflow diagrams remain labeled as diagrams.
+
+## Owner-supplied screenshots
+
+On 2026-10-30, the owner supplied 30 PRISM-GUARD screenshots and explicitly confirmed that the visible names, contact details, and payroll amounts are demo data and safe to publish. Selected four images aligned with the existing contribution evidence: web payroll review, web client management, mobile earnings, and mobile profile/documents. The earnings composite also contains a cash advance screen; its caption keeps the individual contribution limited to earnings and supporting services.
+
+Selected PNGs retain their original pixels and dimensions in `public/assets/projects/prism-guard/`. Their typed content records are in `src/content/project-screenshots.ts`, including descriptive alt text and captions. Other screenshots are renamed and retained in the Git-ignored local `.asset-sources/prism-guard/` folder outside `public/`. Screenshots illustrate the supplied interface state; they do not establish current production behavior or sole ownership of every displayed feature.
 
 ## Candidates kept out of the featured selection
 

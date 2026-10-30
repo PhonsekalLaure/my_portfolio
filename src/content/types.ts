@@ -10,6 +10,30 @@ export type Evidence = {
 
 type Publishable = { publication: Publication; evidence: Evidence };
 
+export type Profile = {
+  name: string;
+  shortName: string;
+  initials: string;
+  headline: string;
+  heroTitle: [string, string];
+  introduction: string;
+  description: string;
+  github: string;
+  linkedin?: string;
+  email?: string;
+  secondaryEmail?: string;
+  resume?: string;
+  location: { publication: Publication; value: string };
+  education: {
+    publication: Publication;
+    school: string;
+    program: string;
+    graduation: string;
+  };
+  about: string[];
+  principles: { number: string; title: string; description: string }[];
+};
+
 export type ProjectActivity = {
   title: string;
   summary: string;
@@ -18,6 +42,15 @@ export type ProjectActivity = {
   kind: "Commit" | "Merged PR";
   reference: string;
   href: string;
+};
+
+export type ProjectScreenshot = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  title?: string;
+  caption?: string;
 };
 
 export type Project = Publishable & {
@@ -37,7 +70,8 @@ export type Project = Publishable & {
   visual: "prism" | "sis" | "itso";
   activity: ProjectActivity[];
   diagram: { label: string; title: string; nodes: string[]; caption: string };
-  screenshots: { src: string; alt: string; width: number; height: number }[];
+  screenshots: ProjectScreenshot[];
+  preview?: { title: string; url: string; description: string };
 };
 
 export type Contribution = Publishable & {
@@ -55,6 +89,8 @@ export type Certification = Publishable & {
   issuer?: string;
   year?: string;
   verificationUrl?: string;
+  kind?: "Certification" | "Course completion";
+  expiresOn?: string;
 };
 
 export type SkillGroup = Publishable & { title: string; skills: string[] };
