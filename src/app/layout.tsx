@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { portfolio, getNavigation } from "@/content/portfolio";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/sections";
 import { getSiteUrl, isIndexable } from "@/lib/site";
 import "./globals.css";
+
+const manrope = localFont({
+  src: "../../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",
+  variable: "--font-manrope",
+  weight: "200 800",
+  style: "normal",
+  display: "swap",
+});
 
 const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
@@ -38,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={manrope.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

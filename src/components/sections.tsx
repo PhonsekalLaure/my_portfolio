@@ -53,7 +53,7 @@ export function SectionHeading({
     <div className="section-heading">
       <div>
         <p className="eyebrow">
-          <span />
+          <span className="section-index" aria-hidden="true" />
           {eyebrow}
         </p>
         <h2>{title}</h2>
@@ -66,55 +66,71 @@ export function SectionHeading({
 export function Hero() {
   const p = portfolio.profile;
   return (
-    <section className="hero container" aria-labelledby="hero-title">
-      <div className="hero-copy">
-        <p className="eyebrow hero-eyebrow">
-          <span />
-          {p.headline}
-        </p>
-        <h1 id="hero-title">
-          {p.heroTitle[0]}
-          <br />
-          <span>{p.heroTitle[1]}</span>
-        </h1>
-        <p className="hero-description">{p.introduction}</p>
-        <div className="hero-actions">
-          {getPublishedProjects().length > 0 && (
-            <Link href="#projects" className="button button-primary">
-              Explore my work
-              <Icon name="arrow" size={18} />
-            </Link>
-          )}
-          <ExternalLink
-            href={p.github}
-            className="button button-quiet"
-            icon="github"
-          >
-            GitHub
-          </ExternalLink>
-          {p.linkedin && (
-            <ExternalLink href={p.linkedin}>LinkedIn</ExternalLink>
-          )}
-          {p.email && (
-            <a className="text-link" href={`mailto:${p.email}`}>
-              Contact
-              <Icon name="mail" size={17} />
-            </a>
-          )}
-          {p.resume && (
-            <a className="text-link" href={p.resume} download>
-              Resume
-              <Icon name="download" size={17} />
-            </a>
-          )}
+    <div className="hero-stage">
+      <section className="hero container" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="eyebrow hero-eyebrow">
+            <span />
+            {p.headline}
+          </p>
+          <h1 id="hero-title">
+            {p.heroTitle[0]}
+            <br />
+            <span>{p.heroTitle[1]}</span>
+          </h1>
+          <p className="hero-description">{p.introduction}</p>
+          <div className="hero-actions">
+            {getPublishedProjects().length > 0 && (
+              <Link href="#projects" className="button button-primary">
+                Explore my work
+                <Icon name="arrow" size={18} />
+              </Link>
+            )}
+            <ExternalLink
+              href={p.github}
+              className="button button-quiet"
+              icon="github"
+            >
+              GitHub
+            </ExternalLink>
+            {p.linkedin && (
+              <ExternalLink href={p.linkedin}>LinkedIn</ExternalLink>
+            )}
+            {p.email && (
+              <a className="text-link" href={`mailto:${p.email}`}>
+                Contact
+                <Icon name="mail" size={17} />
+              </a>
+            )}
+            {p.resume && (
+              <a className="text-link" href={p.resume} download>
+                Resume
+                <Icon name="download" size={17} />
+              </a>
+            )}
+          </div>
+          <div className="hero-footnote">
+            <span className="footnote-line" />
+            Learning through building. Growing through collaboration.
+          </div>
         </div>
-        <div className="hero-footnote">
-          <span className="footnote-line" />
-          Learning through building. Growing through collaboration.
-        </div>
+        <HeroVisual />
+      </section>
+      <div className="hero-meta container">
+        {p.location.publication === "published" && p.location.value && (
+          <span className="hero-location">
+            <span aria-hidden="true" />
+            Based in {p.location.value}
+          </span>
+        )}
+        {getPublishedProjects().length > 0 && (
+          <Link href="#projects" className="hero-scroll">
+            A few things I’ve built
+            <Icon name="arrow" size={16} />
+          </Link>
+        )}
       </div>
-      <HeroVisual />
-    </section>
+    </div>
   );
 }
 export function ProjectCard({
@@ -211,7 +227,14 @@ export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
     <div className="skills-grid">
       {groups.map((group, i) => (
         <article className="skill-group" key={group.title}>
-          <Icon name={icons[i % icons.length]} size={22} />
+          <div className="skill-group-heading">
+            <span className="skill-group-icon">
+              <Icon name={icons[i % icons.length]} size={22} />
+            </span>
+            <span className="skill-group-index" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+          </div>
           <h3>{group.title}</h3>
           <ul>
             {group.skills.map((skill) => (
@@ -335,7 +358,7 @@ export function Contact() {
         <h2>
           Good work starts
           <br />
-          with a conversation.
+          <span>with a conversation.</span>
         </h2>
         <p>
           {portfolio.profile.email

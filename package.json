@@ -14,6 +14,7 @@
     "audit:lighthouse": "lighthouse http://127.0.0.1:3100 --chrome-flags=\"--headless=new\" --only-categories=performance,accessibility,best-practices,seo --output=html --output=json --output-path=.verification/lighthouse --quiet"
   },
   "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
