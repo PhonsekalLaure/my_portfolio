@@ -1,0 +1,11 @@
+node_modules
+.next
+.qodo
+.verification
+package-lock.json
+it_portfolio_content_brief.md
+AGENTS.md
+next-env.d.ts
+test-results
+playwright-report
+.env*
