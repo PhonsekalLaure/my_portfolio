@@ -4,7 +4,9 @@ Place approved project screenshots here, using descriptive filenames and no pers
 
 Place a final, owner-provided resume PDF here and set `profile.resume` in `src/content/profile.ts` to its public path, such as `/assets/resume.pdf`. Do not create a placeholder PDF. Everything in this directory is publicly downloadable.
 
-The current project illustrations are CSS/SVG workflow diagrams, not application screenshots.
+The first screenshot in a project's `screenshots` array is its cover on both the project card and case study. Projects without screenshots use the CSS/SVG workflow diagram as a fallback. PRISM-GUARD currently uses the payroll management screenshot as its cover.
+
+The owner-provided `Picture.png` is the topbar portrait, configured through `profile.photo` in `src/content/profile.ts`. Omit that field to use the initials fallback.
 
 PRISM-GUARD's promotional site is embedded directly from `https://psiai.vercel.app/`; it does not need a screenshot file.
 

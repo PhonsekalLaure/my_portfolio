@@ -14,6 +14,7 @@ export type Profile = {
   name: string;
   shortName: string;
   initials: string;
+  photo?: string;
   headline: string;
   heroTitle: [string, string];
   introduction: string;

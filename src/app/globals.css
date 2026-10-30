@@ -156,6 +156,22 @@ svg {
 .brand-mark > span {
   color: var(--accent);
 }
+.brand-portrait {
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  overflow: hidden;
+  clip-path: circle(50%);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+.brand-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .brand-name {
   font-size: 14px;
   font-weight: 600;
@@ -601,6 +617,23 @@ h2 {
   background-size: 30px 30px;
   mask-image: radial-gradient(ellipse, black, transparent);
 }
+.project-cover {
+  background: #eef1f5;
+}
+.project-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.case-study > .project-visual.project-cover {
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.case-study > .project-cover img {
+  height: auto;
+}
 .project-visual-prism {
   background: radial-gradient(ellipse at 50% 130%, #275c85 0%, #172a42 68%);
 }
@@ -915,15 +948,29 @@ h2 {
 .skill-group ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px 13px;
+  gap: 8px;
   padding: 0;
   list-style: none;
   margin: 11px 0 0;
 }
 .skill-group li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
   font-size: 12px;
-  line-height: 1.9;
+  line-height: 1.5;
   color: var(--muted);
+}
+.skill-icon {
+  display: inline-flex;
+  flex: 0 0 18px;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
 }
 .about-section {
   display: grid;
@@ -1899,7 +1946,7 @@ h2 {
     font-size: 13px;
   }
   .skill-group ul {
-    gap: 4px 10px;
+    gap: 7px;
   }
   .skill-group li {
     font-size: 11px;

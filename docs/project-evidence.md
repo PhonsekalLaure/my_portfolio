@@ -23,6 +23,8 @@ These checks establish URL availability, not end-to-end backend behavior. No acc
 
 ## Owner-supplied screenshots
 
+On 2026-10-30, the owner confirmed that PRISM-GUARD is completed and that they served as project manager, database administrator, and lead developer / backend developer. The published status and role reflect that confirmation while preserving the collaborative capstone context and the source-backed contribution list.
+
 On 2026-10-30, the owner supplied 30 PRISM-GUARD screenshots and explicitly confirmed that the visible names, contact details, and payroll amounts are demo data and safe to publish. Selected four images aligned with the existing contribution evidence: web payroll review, web client management, mobile earnings, and mobile profile/documents. The earnings composite also contains a cash advance screen; its caption keeps the individual contribution limited to earnings and supporting services.
 
 Selected PNGs retain their original pixels and dimensions in `public/assets/projects/prism-guard/`. Their typed content records are in `src/content/project-screenshots.ts`, including descriptive alt text and captions. Other screenshots are renamed and retained in the Git-ignored local `.asset-sources/prism-guard/` folder outside `public/`. Screenshots illustrate the supplied interface state; they do not establish current production behavior or sole ownership of every displayed feature.

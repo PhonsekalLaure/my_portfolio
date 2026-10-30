@@ -49,6 +49,7 @@ export default function RootLayout({
         <Header
           name={portfolio.profile.shortName}
           initials={portfolio.profile.initials}
+          photo={portfolio.profile.photo}
           navigation={getNavigation()}
         />
         {children}

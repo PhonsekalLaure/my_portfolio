@@ -5,6 +5,7 @@ export const profile: Profile = {
   name: "Ronn Saimund Rosarito",
   shortName: "Ronn Rosarito",
   initials: "rr",
+  photo: "/assets/Picture.png",
   headline: "IT student & software developer",
   heroTitle: ["Useful software.", "Thoughtfully built."],
   introduction:

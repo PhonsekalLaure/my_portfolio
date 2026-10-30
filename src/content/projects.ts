@@ -14,13 +14,13 @@ export const projects = [
     title: "PRISM-GUARD",
     category: "Web & mobile · Team capstone",
     context: "Collaborative academic capstone",
-    status: "In development",
+    status: "Completed",
     summary:
       "Connecting agency administration, client operations, and guard-facing workflows across web and mobile.",
-    role: "Contributed HRIS payroll, mobile earnings, client management, and attendance evidence workflows.",
+    role: "Project manager, database administrator, and lead developer / backend developer.",
     technologies: ["React", "React Native", "Expo", "Express", "Supabase"],
     overview:
-      "PRISM-GUARD is a collaborative academic capstone for security-agency operations. The project connects an administrative web application, client-facing workflows, and a mobile experience for guards. It is in development, with ongoing work across its web and mobile workflows.",
+      "PRISM-GUARD is a completed collaborative academic capstone for security-agency operations. The project connects an administrative web application, client-facing workflows, and a mobile experience for guards. I served as project manager, database administrator, and lead developer with a focus on backend development.",
     contributions: [
       "Contributed HRIS payroll tables, filters, breakdown views, and export helpers through merged PR #76.",
       "Built guard-facing earnings screens and connected service and formatting helpers through merged mobile PR #27.",
@@ -77,7 +77,7 @@ export const projects = [
     },
     evidence: {
       verifiedOn: "2026-10-30",
-      note: "Reviewed public repository manifests, live authored commit diffs, and merged web PR #76, mobile PR #27, and promotional PR #7 using authenticated GitHub CLI. Public repository homepage URLs resolve to the listed web and promotional pages; this is URL availability, not full end-to-end deployment verification. Team ownership remains explicit.",
+      note: "The owner confirmed project completion and their roles as project manager, database administrator, and lead developer / backend developer on 2026-10-30. Reviewed public repository manifests, live authored commit diffs, and merged web PR #76, mobile PR #27, and promotional PR #7 using authenticated GitHub CLI. Public repository homepage URLs resolve to the listed web and promotional pages; this is URL availability, not full end-to-end deployment verification. Team ownership remains explicit.",
       references: [
         "prism-guard-web: 1bb8380, 52b89aa, b173324",
         "prism-guard-mobile: 305c07e, 2c0590b, fce11fc",

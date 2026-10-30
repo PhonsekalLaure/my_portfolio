@@ -12,7 +12,8 @@ import {
   type SkillGroup,
 } from "@/content/portfolio";
 import { Icon, type IconName } from "./icons";
-import { HeroVisual, ProjectVisual } from "./project-visual";
+import { HeroVisual, ProjectCover } from "./project-visual";
+import { SkillIcon } from "./skill-icon";
 
 export function ExternalLink({
   href,
@@ -126,11 +127,7 @@ export function ProjectCard({
   return (
     <article className="project-card">
       <div className="project-artwork">
-        <ProjectVisual
-          variant={project.visual}
-          nodes={project.diagram.nodes}
-          label={project.diagram.label}
-        />
+        <ProjectCover project={project} />
         <Link
           href={`/projects/${project.slug}`}
           className="project-image-arrow"
@@ -218,7 +215,10 @@ export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
           <h3>{group.title}</h3>
           <ul>
             {group.skills.map((skill) => (
-              <li key={skill}>{skill}</li>
+              <li key={skill}>
+                <SkillIcon name={skill} />
+                <span>{skill}</span>
+              </li>
             ))}
           </ul>
         </article>

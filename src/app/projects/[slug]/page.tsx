@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublishedProject, getPublishedProjects } from "@/content/portfolio";
-import { ProjectVisual } from "@/components/project-visual";
+import { ProjectCover } from "@/components/project-visual";
 import { ProjectActivity } from "@/components/project-activity";
 import { ProjectPreview } from "@/components/project-preview";
 import { Icon } from "@/components/icons";
@@ -82,12 +82,15 @@ export default async function ProjectPage({
           <span>{project.context}</span>
         </div>
       </div>
-      <ProjectVisual
-        variant={project.visual}
-        nodes={project.diagram.nodes}
-        label={project.diagram.label}
+      <ProjectCover
+        project={project}
+        sizes="(max-width: 1240px) 100vw, 1180px"
       />
-      <p className="visual-caption">{project.diagram.caption}</p>
+      <p className="visual-caption">
+        {project.screenshots[0]
+          ? project.screenshots[0].caption || project.screenshots[0].alt
+          : project.diagram.caption}
+      </p>
       <div className="case-layout">
         <div className="case-main">
           <section className="case-section">

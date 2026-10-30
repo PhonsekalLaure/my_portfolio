@@ -1,6 +1,39 @@
+import Image from "next/image";
 import { Icon } from "./icons";
 import type { IconName } from "./icons";
 import type { Project } from "@/content/types";
+
+export function ProjectCover({
+  project,
+  sizes = "(max-width: 700px) 100vw, (max-width: 1240px) 50vw, 590px",
+}: {
+  project: Project;
+  sizes?: string;
+}) {
+  const screenshot = project.screenshots[0];
+
+  if (!screenshot) {
+    return (
+      <ProjectVisual
+        variant={project.visual}
+        nodes={project.diagram.nodes}
+        label={project.diagram.label}
+      />
+    );
+  }
+
+  return (
+    <div className="project-visual project-cover">
+      <Image
+        src={screenshot.src}
+        alt={screenshot.alt}
+        width={screenshot.width}
+        height={screenshot.height}
+        sizes={sizes}
+      />
+    </div>
+  );
+}
 
 export function HeroVisual() {
   return (
