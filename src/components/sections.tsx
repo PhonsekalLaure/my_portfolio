@@ -86,26 +86,33 @@ export function Hero() {
                 <Icon name="arrow" size={18} />
               </Link>
             )}
+            {p.resume && (
+              <a className="button button-quiet" href={p.resume} download>
+                Resume
+                <Icon name="download" size={17} />
+              </a>
+            )}
+          </div>
+          <div className="hero-socials">
             <ExternalLink
               href={p.github}
-              className="button button-quiet"
+              className="text-link hero-social-link"
               icon="github"
             >
               GitHub
             </ExternalLink>
             {p.linkedin && (
-              <ExternalLink href={p.linkedin}>LinkedIn</ExternalLink>
+              <ExternalLink
+                href={p.linkedin}
+                className="text-link hero-social-link"
+              >
+                LinkedIn
+              </ExternalLink>
             )}
             {p.email && (
-              <a className="text-link" href={`mailto:${p.email}`}>
+              <a className="text-link hero-social-link" href="#contact">
                 Contact
                 <Icon name="mail" size={17} />
-              </a>
-            )}
-            {p.resume && (
-              <a className="text-link" href={p.resume} download>
-                Resume
-                <Icon name="download" size={17} />
               </a>
             )}
           </div>
@@ -252,11 +259,52 @@ export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
     </div>
   );
 }
+function CertificationCard({ certificate }: { certificate: Certification }) {
+  return (
+    <article className="certificate" data-reveal="up">
+      <Icon name="shield" size={25} />
+      <div className="certificate-content">
+        <h3>{certificate.name}</h3>
+        {certificate.kind && (
+          <span className="credential-kind">{certificate.kind}</span>
+        )}
+        {(certificate.issuer || certificate.year) && (
+          <p>
+            {[certificate.issuer, certificate.year].filter(Boolean).join(" · ")}
+          </p>
+        )}
+        {certificate.expiresOn && (
+          <p className="credential-expiry">
+            Valid until{" "}
+            {new Intl.DateTimeFormat("en", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+              timeZone: "UTC",
+            }).format(new Date(`${certificate.expiresOn}T00:00:00Z`))}
+          </p>
+        )}
+        {certificate.verificationUrl && (
+          <ExternalLink href={certificate.verificationUrl}>
+            Verify credential
+          </ExternalLink>
+        )}
+      </div>
+    </article>
+  );
+}
+
 export function Certifications({
   certifications,
 }: {
   certifications: Certification[];
 }) {
+  const credentials = certifications.filter(
+    (certificate) => certificate.kind !== "Course completion",
+  );
+  const courses = certifications.filter(
+    (certificate) => certificate.kind === "Course completion",
+  );
   return (
     <section className="container section" id="certifications">
       <SectionHeading
@@ -264,44 +312,33 @@ export function Certifications({
         title="Certifications & training"
         description="Professional certifications and completed courses, with public credential records."
       />
-      <div className="certification-grid">
-        {certifications.map((certificate) => (
-          <article
-            className="certificate"
-            key={certificate.name}
-            data-reveal="up"
-          >
-            <Icon name="shield" size={25} />
-            <h3>{certificate.name}</h3>
-            {certificate.kind && (
-              <span className="credential-kind">{certificate.kind}</span>
-            )}
-            {(certificate.issuer || certificate.year) && (
-              <p>
-                {[certificate.issuer, certificate.year]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </p>
-            )}
-            {certificate.expiresOn && (
-              <p className="credential-expiry">
-                Valid until{" "}
-                {new Intl.DateTimeFormat("en", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                  timeZone: "UTC",
-                }).format(new Date(`${certificate.expiresOn}T00:00:00Z`))}
-              </p>
-            )}
-            {certificate.verificationUrl && (
-              <ExternalLink href={certificate.verificationUrl}>
-                Verify credential
-              </ExternalLink>
-            )}
-          </article>
-        ))}
-      </div>
+      {credentials.length > 0 && (
+        <div className="certification-grid">
+          {credentials.map((certificate) => (
+            <CertificationCard
+              key={certificate.name}
+              certificate={certificate}
+            />
+          ))}
+        </div>
+      )}
+      {courses.length > 0 && (
+        <details className="training-disclosure">
+          <summary>
+            <span>Completed courses & training</span>
+            <span className="training-count">{courses.length}</span>
+            <Icon name="arrow" size={18} className="training-arrow" />
+          </summary>
+          <div className="certification-grid training-grid">
+            {courses.map((certificate) => (
+              <CertificationCard
+                key={certificate.name}
+                certificate={certificate}
+              />
+            ))}
+          </div>
+        </details>
+      )}
     </section>
   );
 }
@@ -351,6 +388,8 @@ export function About() {
 }
 export function Contact() {
   const links = getSocialLinks();
+  const emails = links.filter((link) => link.href.startsWith("mailto:"));
+  const socialLinks = links.filter((link) => !link.href.startsWith("mailto:"));
   if (!links.length) return null;
   return (
     <section
@@ -376,25 +415,29 @@ export function Contact() {
             ? "Have a project, an opportunity, or something you’d like to discuss? I’d like to hear about it."
             : "Explore my repositories, follow what I’m building, and get to know my work on GitHub."}
         </p>
+        {emails.length > 0 && (
+          <address className="contact-emails">
+            {emails.map((link) => (
+              <div className="contact-email" key={link.href}>
+                <span className="contact-email-label">
+                  {link.label === "Email" ? "Personal email" : link.label}
+                </span>
+                <span className="contact-email-value">
+                  {link.href.slice(7)}
+                </span>
+              </div>
+            ))}
+          </address>
+        )}
         <div className="contact-actions">
-          {links.map((link, index) => (
+          {socialLinks.map((link) => (
             <ExternalLink
               key={link.href}
               href={link.href}
-              className={`button ${index === 0 ? "button-primary" : "button-outline"}`}
-              icon={
-                link.label === "GitHub"
-                  ? "github"
-                  : link.href.startsWith("mailto:")
-                    ? "mail"
-                    : "external"
-              }
+              className="button button-outline"
+              icon={link.label === "GitHub" ? "github" : "external"}
             >
-              {link.href.startsWith("mailto:")
-                ? link.label === "Email"
-                  ? "Send an email"
-                  : link.label
-                : `Find me on ${link.label}`}
+              Find me on {link.label}
             </ExternalLink>
           ))}
         </div>
@@ -403,23 +446,8 @@ export function Contact() {
   );
 }
 export function Footer() {
-  const emails = [
-    portfolio.profile.email,
-    portfolio.profile.secondaryEmail,
-  ].filter((email): email is string => Boolean(email));
-
   return (
     <footer className="container site-footer">
-      {emails.length > 0 && (
-        <address className="footer-emails">
-          {emails.map((email) => (
-            <a key={email} href={`mailto:${email}`}>
-              <Icon name="mail" size={16} />
-              <span>{email}</span>
-            </a>
-          ))}
-        </address>
-      )}
       <span>
         © {new Date().getFullYear()} {portfolio.profile.shortName}
       </span>

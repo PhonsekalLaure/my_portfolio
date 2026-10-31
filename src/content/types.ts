@@ -89,6 +89,7 @@ export type Certification = Publishable & {
   name: string;
   issuer?: string;
   year?: string;
+  issuedOn?: string;
   verificationUrl?: string;
   kind?: "Certification" | "Course completion";
   expiresOn?: string;

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./icons";
 
@@ -19,8 +20,72 @@ export function Header({
   navigation: NavItem[];
 }) {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const pathname = usePathname();
+  const currentSection = pathname === "/" ? activeSection : null;
   const menuButton = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const sections = navigation
+      .map((item) => document.getElementById(item.href.split("#")[1]))
+      .filter((section): section is HTMLElement => Boolean(section));
+    if (!sections.length) return;
+
+    let frame = 0;
+    let previous: string | null | undefined;
+
+    function updateSection() {
+      frame = 0;
+      const bar = header.current?.querySelector(".header-inner");
+      const anchorOffset =
+        Number.parseFloat(
+          getComputedStyle(document.documentElement).scrollPaddingTop,
+        ) || 0;
+      // Anchor destinations must count as current even with a shorter header.
+      const marker = Math.max(
+        (bar?.getBoundingClientRect().bottom ?? 88) + 32,
+        anchorOffset + 1,
+      );
+      const positions = sections.map((section) => ({
+        id: section.id,
+        top: section.getBoundingClientRect().top,
+      }));
+      const atBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 2;
+      let next: string | null = null;
+      for (const section of positions) {
+        if (section.top > marker) break;
+        next = section.id;
+      }
+      if (atBottom) next = sections[sections.length - 1].id;
+
+      if (previous !== next) {
+        previous = next;
+        setActiveSection(next);
+      }
+    }
+
+    function scheduleUpdate() {
+      if (!frame) frame = window.requestAnimationFrame(updateSection);
+    }
+
+    scheduleUpdate();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    const contentResize = new ResizeObserver(scheduleUpdate);
+    contentResize.observe(document.body);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      contentResize.disconnect();
+    };
+  }, [navigation, pathname]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -89,6 +154,11 @@ export function Header({
               key={item.href}
               href={item.href}
               className={item.label === "Contact" ? "nav-contact" : ""}
+              aria-current={
+                currentSection === item.href.split("#")[1]
+                  ? "location"
+                  : undefined
+              }
             >
               {item.label}
               {item.label === "Contact" && <Icon name="external" size={14} />}
@@ -125,7 +195,16 @@ export function Header({
         hidden={!open}
       >
         {navigation.map((item) => (
-          <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setOpen(false)}
+            aria-current={
+              currentSection === item.href.split("#")[1]
+                ? "location"
+                : undefined
+            }
+          >
             {item.label}
             <Icon name="arrow" size={16} />
           </Link>

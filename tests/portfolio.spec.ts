@@ -122,6 +122,10 @@ test("scroll reveals replay in both directions and support motion fallbacks", as
     await expect(fallback.locator('[data-reveal-state="pending"]')).toHaveCount(
       0,
     );
+    await fallback.locator(".training-disclosure summary").click();
+    await expect(
+      fallback.getByRole("heading", { name: "DevNet Associate", exact: true }),
+    ).toBeVisible();
   } finally {
     await context.close();
   }
@@ -135,14 +139,22 @@ test("supplied profile links, credentials, and resume are usable", async ({
   await expect(
     page.getByRole("link", { name: "LinkedIn", exact: true }),
   ).toHaveAttribute("href", /^https:\/\/www\.linkedin\.com\/in\//);
-  const emails = await page
-    .locator('a[href^="mailto:"]')
-    .evaluateAll((links) => [
-      ...new Set(links.map((link) => link.getAttribute("href")!.slice(7))),
-    ]);
-  expect(emails.length).toBeGreaterThanOrEqual(2);
+  const emails = await page.locator(".contact-email-value").allTextContents();
+  expect(emails).toEqual([
+    "rosaritoronnsaimund@gmail.com",
+    "rurosarito@fit.edu.ph",
+  ]);
   for (const email of emails)
     expect(email).toMatch(/^[^\s@|]+@[^\s@|]+\.[^\s@|]+$/);
+  await page
+    .locator(".hero-socials")
+    .getByRole("link", { name: "Contact", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/#contact$/);
+  await expect(page.locator(".contact-emails")).toBeVisible();
+  await expect(page.locator('#contact a[href^="mailto:"]')).toHaveCount(0);
+  for (const email of emails)
+    await expect(page.locator(".site-footer")).not.toContainText(email);
   await expect(page.locator("#about")).toContainText(
     "FEU Institute of Technology",
   );
@@ -154,8 +166,49 @@ test("supplied profile links, credentials, and resume are usable", async ({
   expect(resume.ok()).toBe(true);
   expect(resume.headers()["content-type"]).toContain("application/pdf");
   expect((await resume.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  await expect(page.locator(".hero-actions a")).toHaveText([
+    "Explore my work",
+    "Resume",
+  ]);
+  await expect(page.locator(".hero-socials a")).toHaveText([
+    "GitHub",
+    "LinkedIn",
+    "Contact",
+  ]);
+  const courses = page.locator(".training-disclosure");
+  const courseTitle = page.getByRole("heading", {
+    name: "DevNet Associate",
+    exact: true,
+  });
+  await expect(courses).not.toHaveAttribute("open");
+  await expect(courseTitle).not.toBeVisible();
+  for (const kind of await page
+    .locator("#certifications > .certification-grid .credential-kind")
+    .all()) {
+    await expect(kind).toHaveText("Certification");
+  }
+  await courses.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(courseTitle).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(courseTitle).not.toBeVisible();
+  await page.keyboard.press("Enter");
   const certificates = page.locator("#certifications article");
   expect(await certificates.count()).toBeGreaterThanOrEqual(8);
+  await expect(
+    page.locator("#certifications > .certification-grid h3"),
+  ).toHaveText([
+    "PMI Project Management Ready™",
+    "IT Specialist - Python",
+    "Cisco Certified Support Technician Networking (CCST Networking) - Lifetime",
+    "IT Specialist - Databases",
+  ]);
+  await expect(courses.locator("h3")).toHaveText([
+    "DevNet Associate",
+    "CCNA: Enterprise Networking, Security, and Automation",
+    "CCNA: Switching, Routing, and Wireless Essentials",
+    "CCNA: Introduction to Networks",
+  ]);
   for (const card of await certificates.all()) {
     await expect(card.locator(".credential-kind")).toHaveText(
       /^(Certification|Course completion)$/,
@@ -179,6 +232,40 @@ test("supplied profile links, credentials, and resume are usable", async ({
   await expect(
     certificates.filter({ hasText: "PMI Project Management Ready" }),
   ).toContainText("Valid until Mar 17, 2031");
+});
+
+test("navigation tracks the reading position and resets on case studies", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const current = page.locator('.desktop-nav a[aria-current="location"]');
+  await expect(current).toHaveCount(0);
+  for (const [id, label] of [
+    ["skills", "Skills"],
+    ["certifications", "Certifications"],
+  ]) {
+    await page
+      .locator(`#${id}`)
+      .evaluate((section) =>
+        section.scrollIntoView({ block: "start", behavior: "instant" }),
+      );
+    await expect(current).toHaveText(label);
+  }
+  await page.locator(".training-disclosure summary").click();
+  await expect(current).toHaveText("Certifications");
+  await page.evaluate(() =>
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }),
+  );
+  await expect(current).toHaveText("Contact");
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect(current).toHaveCount(0);
+  await page.getByRole("link", { name: "View case study" }).first().click();
+  await expect(page).toHaveURL(/\/projects\/prism-guard$/);
+  await expect(current).toHaveCount(0);
+  await page.locator(".back-link").click();
+  await expect(page).toHaveURL(/\/#projects$/);
+  await expect(current).toHaveText("Projects");
 });
 
 test("theme follows the system until an explicit preference is saved", async ({

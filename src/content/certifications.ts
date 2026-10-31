@@ -7,6 +7,7 @@ export const certifications: Certification[] = [
     name: "IT Specialist - Python",
     issuer: "Certiport, a Pearson VUE business",
     year: "2025",
+    issuedOn: "2025-02-16T21:55:12.000Z",
     kind: "Certification",
     verificationUrl:
       "https://www.credly.com/badges/462a81d3-137a-486b-b3bb-d3d5092fed60/public_url",
@@ -25,6 +26,7 @@ export const certifications: Certification[] = [
     name: "IT Specialist - Databases",
     issuer: "Certiport, a Pearson VUE business",
     year: "2024",
+    issuedOn: "2024-11-28T21:35:12.000Z",
     kind: "Certification",
     verificationUrl:
       "https://www.credly.com/badges/1c3511b0-417e-4f5d-9aec-0097c6f82de8/public_url",
@@ -43,6 +45,7 @@ export const certifications: Certification[] = [
     name: "PMI Project Management Ready™",
     issuer: "Project Management Institute",
     year: "2026",
+    issuedOn: "2026-03-16T21:15:19.000Z",
     kind: "Certification",
     expiresOn: "2031-03-17",
     verificationUrl:
@@ -62,6 +65,7 @@ export const certifications: Certification[] = [
     name: "DevNet Associate",
     issuer: "Cisco",
     year: "2026",
+    issuedOn: "2026-04-17T08:51:35.000Z",
     kind: "Course completion",
     verificationUrl:
       "https://www.credly.com/badges/17e6f4d5-0ce2-490c-8e4c-489052308187/public_url",
@@ -80,6 +84,7 @@ export const certifications: Certification[] = [
     name: "CCNA: Introduction to Networks",
     issuer: "Cisco",
     year: "2025",
+    issuedOn: "2025-02-07T04:08:24.000Z",
     kind: "Course completion",
     verificationUrl:
       "https://www.credly.com/badges/a49a9351-40f9-43bb-ad32-909dfeec88df/public_url",
@@ -98,6 +103,7 @@ export const certifications: Certification[] = [
     name: "Cisco Certified Support Technician Networking (CCST Networking) - Lifetime",
     issuer: "Cisco",
     year: "2025",
+    issuedOn: "2025-02-10T00:00:00.000Z",
     kind: "Certification",
     verificationUrl:
       "https://www.credly.com/badges/7a44995f-7e09-4eb2-bfcd-aa10c99914f3/public_url",
@@ -116,6 +122,7 @@ export const certifications: Certification[] = [
     name: "CCNA: Switching, Routing, and Wireless Essentials",
     issuer: "Cisco",
     year: "2025",
+    issuedOn: "2025-03-23T00:55:17.000Z",
     kind: "Course completion",
     verificationUrl:
       "https://www.credly.com/badges/fd159285-0326-4ebc-bc43-b7c9f5bf2c58/public_url",
@@ -134,6 +141,7 @@ export const certifications: Certification[] = [
     name: "CCNA: Enterprise Networking, Security, and Automation",
     issuer: "Cisco",
     year: "2026",
+    issuedOn: "2026-01-12T07:31:41.000Z",
     kind: "Course completion",
     verificationUrl:
       "https://www.credly.com/badges/3eb2e98b-3f98-4758-bfe9-234f55928dcb/public_url",

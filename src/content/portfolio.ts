@@ -43,9 +43,11 @@ export function getPublishedSkills() {
   return portfolio.skills.filter((item) => item.publication === "published");
 }
 export function getPublishedCertifications(): Certification[] {
-  return portfolio.certifications.filter(
-    (item: Certification) => item.publication === "published",
-  );
+  return portfolio.certifications
+    .filter((item) => item.publication === "published")
+    .sort((a, b) =>
+      (b.issuedOn ?? b.year ?? "").localeCompare(a.issuedOn ?? a.year ?? ""),
+    );
 }
 export function getSocialLinks(): PortfolioLink[] {
   return [
