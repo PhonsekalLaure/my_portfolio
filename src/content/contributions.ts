@@ -1,9 +1,9 @@
 import "server-only";
 import type { Contribution } from "./types";
 
-export const contributions = [
+export const contributions: Contribution[] = [
   {
-    publication: "published",
+    publication: "draft",
     project: "SolarSoil",
     owner: "Marlo522",
     title: "Authentication & guest access",
@@ -27,4 +27,4 @@ export const contributions = [
       ],
     },
   },
-] satisfies Contribution[];
+];

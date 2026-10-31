@@ -5,6 +5,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "IT Specialist - Python",
+    badgeImage: "/assets/credentials/it-specialist-python.png",
     issuer: "Certiport, a Pearson VUE business",
     year: "2025",
     issuedOn: "2025-02-16T21:55:12.000Z",
@@ -24,6 +25,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "IT Specialist - Databases",
+    badgeImage: "/assets/credentials/it-specialist-databases.png",
     issuer: "Certiport, a Pearson VUE business",
     year: "2024",
     issuedOn: "2024-11-28T21:35:12.000Z",
@@ -43,6 +45,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "PMI Project Management Ready™",
+    badgeImage: "/assets/credentials/pmi-project-management-ready.png",
     issuer: "Project Management Institute",
     year: "2026",
     issuedOn: "2026-03-16T21:15:19.000Z",
@@ -63,6 +66,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "DevNet Associate",
+    badgeImage: "/assets/credentials/devnet-associate.png",
     issuer: "Cisco",
     year: "2026",
     issuedOn: "2026-04-17T08:51:35.000Z",
@@ -82,6 +86,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "CCNA: Introduction to Networks",
+    badgeImage: "/assets/credentials/ccna-introduction-to-networks.png",
     issuer: "Cisco",
     year: "2025",
     issuedOn: "2025-02-07T04:08:24.000Z",
@@ -101,6 +106,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "Cisco Certified Support Technician Networking (CCST Networking) - Lifetime",
+    badgeImage: "/assets/credentials/ccst-networking.png",
     issuer: "Cisco",
     year: "2025",
     issuedOn: "2025-02-10T00:00:00.000Z",
@@ -120,6 +126,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "CCNA: Switching, Routing, and Wireless Essentials",
+    badgeImage: "/assets/credentials/ccna-switching-routing-wireless.png",
     issuer: "Cisco",
     year: "2025",
     issuedOn: "2025-03-23T00:55:17.000Z",
@@ -139,6 +146,7 @@ export const certifications: Certification[] = [
   {
     publication: "published",
     name: "CCNA: Enterprise Networking, Security, and Automation",
+    badgeImage: "/assets/credentials/ccna-enterprise-networking.png",
     issuer: "Cisco",
     year: "2026",
     issuedOn: "2026-01-12T07:31:41.000Z",

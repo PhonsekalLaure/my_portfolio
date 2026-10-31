@@ -9,14 +9,15 @@ export function ScrollReveal({ children }: { children: ReactNode }) {
     const container = root.current;
     if (!container || !("IntersectionObserver" in window)) return;
 
-    const elements = container.querySelectorAll<HTMLElement>("[data-reveal]");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let observer: IntersectionObserver | undefined;
     let resetObserver: IntersectionObserver | undefined;
 
     function prepare() {
+      if (!container) return;
       observer?.disconnect();
       resetObserver?.disconnect();
+      const elements = container.querySelectorAll<HTMLElement>("[data-reveal]");
 
       if (reducedMotion.matches) {
         elements.forEach((element) => {
@@ -82,17 +83,23 @@ export function ScrollReveal({ children }: { children: ReactNode }) {
     }
 
     prepare();
+    // Live updates can replace keyed cards while this wrapper stays mounted.
+    const contentObserver = new MutationObserver(prepare);
+    contentObserver.observe(container, { childList: true, subtree: true });
     reducedMotion.addEventListener("change", prepare);
     container.addEventListener("focusin", onFocus);
 
     return () => {
       observer?.disconnect();
       resetObserver?.disconnect();
+      contentObserver.disconnect();
       reducedMotion.removeEventListener("change", prepare);
       container.removeEventListener("focusin", onFocus);
-      elements.forEach((element) => {
-        delete element.dataset.revealState;
-      });
+      container
+        .querySelectorAll<HTMLElement>("[data-reveal]")
+        .forEach((element) => {
+          delete element.dataset.revealState;
+        });
     };
   }, []);
 

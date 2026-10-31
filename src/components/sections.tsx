@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import {
   portfolio,
   getPublishedProjects,
@@ -121,7 +121,22 @@ export function Hero() {
             Learning through building. Growing through collaboration.
           </div>
         </div>
-        <HeroVisual />
+        {p.photo ? (
+          <div className="hero-portrait" data-reveal="right">
+            <Image
+              className="hero-photo"
+              src={p.photo}
+              alt={`Portrait of ${p.name}`}
+              width={1254}
+              height={1254}
+              sizes="(max-width: 480px) calc(100vw - 64px), (max-width: 650px) 360px, (max-width: 1100px) 40vw, 420px"
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
+        ) : (
+          <HeroVisual />
+        )}
       </section>
       <div className="hero-meta container">
         {p.location.publication === "published" && p.location.value && (
@@ -232,11 +247,16 @@ export function ContributionCard({
   );
 }
 export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
-  const icons: IconName[] = ["code", "phone", "database", "branch"];
+  const icons: IconName[] = ["code", "database", "phone", "branch", "code"];
   return (
     <div className="skills-grid">
       {groups.map((group, i) => (
-        <article className="skill-group" key={group.title} data-reveal="up">
+        <article
+          className="skill-group"
+          key={group.title}
+          data-reveal="up"
+          style={{ "--reveal-delay": `${i * 100}ms` } as CSSProperties}
+        >
           <div className="skill-group-heading">
             <span className="skill-group-icon">
               <Icon name={icons[i % icons.length]} size={22} />
@@ -262,7 +282,19 @@ export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
 function CertificationCard({ certificate }: { certificate: Certification }) {
   return (
     <article className="certificate" data-reveal="up">
-      <Icon name="shield" size={25} />
+      <span className="certificate-badge" aria-hidden="true">
+        {certificate.badgeImage ? (
+          <Image
+            src={certificate.badgeImage}
+            alt=""
+            width={144}
+            height={144}
+            sizes="(max-width: 650px) 52px, 72px"
+          />
+        ) : (
+          <Icon name="shield" size={25} />
+        )}
+      </span>
       <div className="certificate-content">
         <h3>{certificate.name}</h3>
         {certificate.kind && (

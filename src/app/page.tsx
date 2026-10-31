@@ -80,7 +80,7 @@ export default function Home() {
               <SectionHeading
                 eyebrow="My toolkit"
                 title="Tools I build with."
-                description="Technologies used in my projects and contributions. Always room to learn more."
+                description="Languages, frameworks, and tools in my technical toolkit. Always room to learn more."
               />
               <SkillGroups groups={skills} />
             </div>

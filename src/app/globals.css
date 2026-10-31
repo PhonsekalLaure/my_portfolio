@@ -145,40 +145,14 @@ svg {
 }
 .brand {
   display: flex;
-  gap: 15px;
   align-items: center;
+  min-height: 44px;
   white-space: nowrap;
 }
-.brand-mark {
-  font-weight: 750;
-  font-size: 36px;
-  line-height: 1;
-  letter-spacing: -4px;
-  padding-right: 3px;
-}
-.brand-mark > span {
-  color: var(--accent);
-}
-.brand-portrait {
-  display: block;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  overflow: hidden;
-  clip-path: circle(50%);
-  border: 1px solid var(--line);
-  border-radius: 50%;
-}
-.brand-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 .brand-name {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.25px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 .desktop-nav {
   display: flex;
@@ -447,6 +421,22 @@ svg {
 }
 .hero-scroll:hover {
   color: var(--accent);
+}
+.hero-portrait {
+  width: 100%;
+  max-width: 444px;
+  justify-self: end;
+  padding: 11px;
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--line));
+  border-radius: 26px;
+  background: var(--surface);
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--accent) 9%, transparent);
+}
+.hero-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
 }
 .hero-visual {
   background:
@@ -1069,15 +1059,19 @@ h2 {
 }
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 16px;
   margin-top: 38px;
 }
 .skill-group {
+  grid-column: span 2;
   padding: 23px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--surface);
+}
+.skill-group:nth-child(-n + 2) {
+  grid-column: span 3;
 }
 .skill-group,
 .certificate {
@@ -1355,13 +1349,22 @@ h2 {
     transparent 35%
   );
 }
-.certificate > svg {
+.certificate-badge {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  padding: 7px;
   color: var(--accent);
-  box-sizing: content-box;
-  padding: 10px;
   border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--surface);
+  border-radius: 12px;
+  background: #fff;
+}
+.certificate-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .certificate-content {
   display: flex;
@@ -1453,9 +1456,6 @@ h2 {
   flex-direction: row;
   gap: 16px;
   padding: 18px;
-}
-.training-grid .certificate > svg {
-  flex-shrink: 0;
 }
 .training-grid .certificate h3 {
   margin-top: 0;
@@ -2003,7 +2003,15 @@ h2 {
     font-size: 20px;
   }
   .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 15px;
+  }
+  .skill-group,
+  .skill-group:nth-child(-n + 2) {
+    grid-column: auto;
+  }
+  .skill-group:first-child {
+    grid-column: 1 / -1;
   }
   .skill-group {
     padding: 18px;
@@ -2053,13 +2061,7 @@ h2 {
     height: 70px;
   }
   .brand-name {
-    font-size: 12px;
-  }
-  .brand {
-    gap: 12px;
-  }
-  .brand-mark {
-    font-size: 32px;
+    font-size: 18px;
   }
   .hero {
     grid-template-columns: 1fr;
@@ -2090,14 +2092,15 @@ h2 {
   .certificate,
   .training-grid .certificate {
     display: grid;
-    grid-template-columns: 36px minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr);
     gap: 14px;
     padding: 20px;
   }
-  .certificate > svg {
-    width: 18px;
-    height: 18px;
-    padding: 8px;
+  .certificate-badge {
+    width: 64px;
+    height: 64px;
+    padding: 5px;
+    border-radius: 9px;
   }
   .certificate h3 {
     margin-top: 0;
@@ -2132,6 +2135,10 @@ h2 {
     aspect-ratio: 1;
     width: 100%;
     max-width: 500px;
+    justify-self: center;
+  }
+  .hero-portrait {
+    max-width: 384px;
     justify-self: center;
   }
   .visual-topline {
@@ -2302,7 +2309,7 @@ h2 {
     padding-block: 43px;
   }
   .skills-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 12px;
     margin-top: 30px;
   }
@@ -2465,7 +2472,7 @@ h2 {
     font-size: 35px;
   }
   .brand-name {
-    font-size: 11px;
+    font-size: 17px;
   }
   .visual-node {
     padding: 10px;
@@ -2553,15 +2560,12 @@ h2 {
   .projects-grid > [data-reveal]:nth-child(even) {
     --reveal-delay: 100ms;
   }
-  .skills-grid > [data-reveal]:nth-child(2),
   .certification-grid > [data-reveal]:nth-child(4n + 2) {
     --reveal-delay: 70ms;
   }
-  .skills-grid > [data-reveal]:nth-child(3),
   .certification-grid > [data-reveal]:nth-child(4n + 3) {
     --reveal-delay: 140ms;
   }
-  .skills-grid > [data-reveal]:nth-child(4),
   .certification-grid > [data-reveal]:nth-child(4n) {
     --reveal-delay: 210ms;
   }
@@ -2570,9 +2574,6 @@ h2 {
   .scroll-reveal [data-reveal] {
     --reveal-x: 0px;
     --reveal-y: 20px;
-  }
-  .skills-grid > [data-reveal]:nth-child(even) {
-    --reveal-delay: 70ms;
   }
 }
 @keyframes scroll-reveal-in {

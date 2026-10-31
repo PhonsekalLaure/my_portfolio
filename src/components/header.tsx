@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./icons";
@@ -10,13 +9,9 @@ type NavItem = { label: string; href: string };
 
 export function Header({
   name,
-  initials,
-  photo,
   navigation,
 }: {
   name: string;
-  initials: string;
-  photo?: string;
   navigation: NavItem[];
 }) {
   const [open, setOpen] = useState(false);
@@ -129,23 +124,6 @@ export function Header({
     <header className="site-header" ref={header}>
       <div className="container header-inner">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
-          {photo ? (
-            <span className="brand-portrait" aria-hidden="true">
-              <Image
-                className="brand-photo"
-                src={photo}
-                alt=""
-                width={42}
-                height={42}
-                sizes="42px"
-              />
-            </span>
-          ) : (
-            <span className="brand-mark" aria-hidden="true">
-              {initials}
-              <span>.</span>
-            </span>
-          )}
           <span className="brand-name">{name}</span>
         </Link>
         <nav aria-label="Main navigation" className="desktop-nav">

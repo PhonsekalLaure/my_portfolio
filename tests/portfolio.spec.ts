@@ -28,10 +28,8 @@ test("published content is accessible, responsive, and excludes drafts", async (
   await expect(
     page.getByRole("heading", { name: "ITSO Equipment Management" }),
   ).toBeVisible();
-  await expect(page.locator("#contributions")).toContainText(
-    "Marlo522’s repository",
-  );
-  await expect(page.locator("#contributions")).toContainText("Merged PR #1");
+  await expect(page.locator("#contributions")).toHaveCount(0);
+  await expect(page.locator('nav a[href="/#contributions"]')).toHaveCount(0);
   await expect(page.locator("#certifications")).toBeVisible();
   const html = await response!.text();
   for (const privateText of [
@@ -39,6 +37,8 @@ test("published content is accessible, responsive, and excludes drafts", async (
     "Awaiting owner-supplied",
     "verifiedOn",
     "credentialId",
+    "Marlo522",
+    "SolarSoil",
   ])
     expect(html).not.toContain(privateText);
   expect(
@@ -75,6 +75,18 @@ test("scroll reveals replay in both directions and support motion fallbacks", as
   const hero = page.locator(".hero-copy");
   await expect(contact).toHaveAttribute("data-reveal-state", "pending");
   await expect(contact).toHaveCSS("opacity", "0");
+  // Replacing cards during a live content update must retain scroll reveals.
+  await page.locator(".skills-grid").evaluate((grid) => {
+    for (const card of [...grid.children]) {
+      const replacement = card.cloneNode(true) as HTMLElement;
+      replacement.removeAttribute("data-reveal-state");
+      card.replaceWith(replacement);
+    }
+  });
+  for (const card of await page.locator(".skill-group").all()) {
+    await expect(card).toHaveAttribute("data-reveal-state", "pending");
+    await expect(card).toHaveCSS("opacity", "0");
+  }
   await skill.scrollIntoViewIfNeeded();
   await expect(skill).toHaveAttribute("data-reveal-state", "revealed");
   await expect(skill).toHaveCSS("opacity", "1");
@@ -210,6 +222,16 @@ test("supplied profile links, credentials, and resume are usable", async ({
     "CCNA: Introduction to Networks",
   ]);
   for (const card of await certificates.all()) {
+    const badge = card.locator(".certificate-badge img");
+    await badge.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        badge.evaluate(
+          (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    await expect(badge).toHaveAttribute("src", /assets%2Fcredentials%2F/);
     await expect(card.locator(".credential-kind")).toHaveText(
       /^(Certification|Course completion)$/,
     );

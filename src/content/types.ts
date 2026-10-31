@@ -90,6 +90,7 @@ export type Certification = Publishable & {
   issuer?: string;
   year?: string;
   issuedOn?: string;
+  badgeImage?: string;
   verificationUrl?: string;
   kind?: "Certification" | "Course completion";
   expiresOn?: string;
