@@ -50,7 +50,7 @@ export function SectionHeading({
   aside?: ReactNode;
 }) {
   return (
-    <div className="section-heading">
+    <div className="section-heading" data-reveal="up">
       <div>
         <p className="eyebrow">
           <span className="section-index" aria-hidden="true" />
@@ -68,7 +68,7 @@ export function Hero() {
   return (
     <div className="hero-stage">
       <section className="hero container" aria-labelledby="hero-title">
-        <div className="hero-copy">
+        <div className="hero-copy" data-reveal="left">
           <p className="eyebrow hero-eyebrow">
             <span />
             {p.headline}
@@ -141,7 +141,10 @@ export function ProjectCard({
   index: number;
 }) {
   return (
-    <article className="project-card">
+    <article
+      className="project-card"
+      data-reveal={index % 2 ? "right" : "left"}
+    >
       <div className="project-artwork">
         <ProjectCover project={project} />
         <Link
@@ -175,7 +178,7 @@ export function ProjectCard({
             View case study
             <Icon name="arrow" size={17} />
           </Link>
-          <span className="status">
+          <span className="status" data-status={project.status}>
             <span />
             {project.status}
           </span>
@@ -190,7 +193,7 @@ export function ContributionCard({
   contribution: Contribution;
 }) {
   return (
-    <article className="contribution-card">
+    <article className="contribution-card" data-reveal="left">
       <div className="contribution-symbol">
         <Icon name="branch" size={30} />
       </div>
@@ -226,7 +229,7 @@ export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
   return (
     <div className="skills-grid">
       {groups.map((group, i) => (
-        <article className="skill-group" key={group.title}>
+        <article className="skill-group" key={group.title} data-reveal="up">
           <div className="skill-group-heading">
             <span className="skill-group-icon">
               <Icon name={icons[i % icons.length]} size={22} />
@@ -263,7 +266,11 @@ export function Certifications({
       />
       <div className="certification-grid">
         {certifications.map((certificate) => (
-          <article className="certificate" key={certificate.name}>
+          <article
+            className="certificate"
+            key={certificate.name}
+            data-reveal="up"
+          >
             <Icon name="shield" size={25} />
             <h3>{certificate.name}</h3>
             {certificate.kind && (
@@ -302,7 +309,7 @@ export function About() {
   const p = portfolio.profile;
   return (
     <section id="about" className="section about-section container">
-      <div>
+      <div data-reveal="left">
         <p className="eyebrow">
           <span />A little about me
         </p>
@@ -328,7 +335,7 @@ export function About() {
           See what I’m working on
         </ExternalLink>
       </div>
-      <div className="principles">
+      <div className="principles" data-reveal="right">
         {p.principles.map((principle) => (
           <article key={principle.number}>
             <span>{principle.number}</span>
@@ -346,7 +353,11 @@ export function Contact() {
   const links = getSocialLinks();
   if (!links.length) return null;
   return (
-    <section id="contact" className="container contact-section">
+    <section
+      id="contact"
+      className="container contact-section"
+      data-reveal="scale"
+    >
       <div className="contact-decoration" aria-hidden="true">
         ↗
       </div>
@@ -392,12 +403,27 @@ export function Contact() {
   );
 }
 export function Footer() {
+  const emails = [
+    portfolio.profile.email,
+    portfolio.profile.secondaryEmail,
+  ].filter((email): email is string => Boolean(email));
+
   return (
     <footer className="container site-footer">
+      {emails.length > 0 && (
+        <address className="footer-emails">
+          {emails.map((email) => (
+            <a key={email} href={`mailto:${email}`}>
+              <Icon name="mail" size={16} />
+              <span>{email}</span>
+            </a>
+          ))}
+        </address>
+      )}
       <span>
         © {new Date().getFullYear()} {portfolio.profile.shortName}
       </span>
-      <span>Built with care. And Next.js.</span>
+      <span className="footer-credit">Built with care. And Next.js.</span>
       <ExternalLink
         href={portfolio.profile.github}
         icon="github"

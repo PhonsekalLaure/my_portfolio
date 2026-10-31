@@ -13,6 +13,8 @@ npm run dev
 
 Open http://localhost:3000. No database, API keys, authentication, or environment configuration is required for local use.
 
+Development output is stored in `.next-dev`, separately from production output in `.next`. Production builds can run while the dev server is open. Stop the relevant server before moving or clearing its generated output; removing files from a running server can cause missing-manifest and Turbopack cache errors.
+
 ## Updating content
 
 Edit the appropriate file in **`src/content/`**:

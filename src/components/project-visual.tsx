@@ -39,6 +39,7 @@ export function HeroVisual() {
   return (
     <div
       className="hero-visual"
+      data-reveal="right"
       role="img"
       aria-label="Web interfaces, application logic, and mobile experiences connected around a shared workflow."
     >

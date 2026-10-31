@@ -75,7 +75,7 @@ export default async function ProjectPage({
         <h1>{project.title}</h1>
         <p className="case-summary">{project.summary}</p>
         <div className="case-meta">
-          <span className="status">
+          <span className="status" data-status={project.status}>
             <span />
             {project.status}
           </span>

@@ -55,11 +55,76 @@ test("published content is accessible, responsive, and excludes drafts", async (
         .analyze()
     ).violations,
   ).toEqual([]);
+  // A static full-page capture should show content outside the viewport too.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.screenshot({
     path: `.verification/${testInfo.project.name}-light.png`,
     fullPage: true,
   });
   expect(errors).toEqual([]);
+});
+
+test("scroll reveals replay in both directions and support motion fallbacks", async ({
+  page,
+  browser,
+  baseURL,
+}) => {
+  await page.goto("/");
+  const contact = page.locator("#contact");
+  const skill = page.locator(".skill-group").first();
+  const hero = page.locator(".hero-copy");
+  await expect(contact).toHaveAttribute("data-reveal-state", "pending");
+  await expect(contact).toHaveCSS("opacity", "0");
+  await skill.scrollIntoViewIfNeeded();
+  await expect(skill).toHaveAttribute("data-reveal-state", "revealed");
+  await expect(skill).toHaveCSS("opacity", "1");
+  await expect(hero).toHaveAttribute("data-reveal-state", "pending");
+  await contact.scrollIntoViewIfNeeded();
+  await expect(contact).toHaveAttribute("data-reveal-state", "revealed");
+  await expect(contact).toHaveCSS("opacity", "1");
+
+  // Scroll past a revealed card, then return to it from below.
+  await expect(skill).toHaveAttribute("data-reveal-state", "pending");
+  await expect(skill).toHaveCSS("opacity", "0");
+  await skill.scrollIntoViewIfNeeded();
+  await expect(skill).toHaveAttribute("data-reveal-state", "revealed");
+  await expect(skill).toHaveCSS("opacity", "1");
+
+  // Leaving above the section also prepares it for another downward visit.
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect(hero).toHaveAttribute("data-reveal-state", "revealed");
+  await expect(hero).toHaveCSS("opacity", "1");
+  await expect(skill).toHaveAttribute("data-reveal-state", "pending");
+  await expect(skill).toHaveCSS("opacity", "0");
+  await skill.scrollIntoViewIfNeeded();
+  await expect(skill).toHaveAttribute("data-reveal-state", "revealed");
+  await expect(skill).toHaveCSS("opacity", "1");
+
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await page.reload();
+  await expect(contact).toHaveAttribute("data-reveal-state", "pending");
+  await contact.locator("a").first().focus();
+  await expect(contact).toHaveAttribute("data-reveal-state", "settled");
+  await expect(contact).toHaveCSS("opacity", "1");
+
+  // Changing the OS preference while on the page immediately shows everything.
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator('[data-reveal-state="pending"]')).toHaveCount(0);
+  await expect(contact).toHaveCSS("animation-name", "none");
+  await page.reload();
+  await expect(contact).toHaveCSS("opacity", "1");
+
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const fallback = await context.newPage();
+    await fallback.goto(baseURL!);
+    await expect(fallback.locator("#contact")).toHaveCSS("opacity", "1");
+    await expect(fallback.locator('[data-reveal-state="pending"]')).toHaveCount(
+      0,
+    );
+  } finally {
+    await context.close();
+  }
 });
 
 test("supplied profile links, credentials, and resume are usable", async ({

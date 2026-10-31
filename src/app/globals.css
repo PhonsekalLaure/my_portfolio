@@ -345,7 +345,7 @@ svg {
   margin-top: 25px;
   max-width: 440px;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.85;
 }
 .hero-actions {
@@ -395,7 +395,7 @@ svg {
   align-items: center;
   gap: 11px;
   color: var(--subtle);
-  font-size: 10px;
+  font-size: 12px;
 }
 .footnote-line {
   height: 1px;
@@ -410,7 +410,7 @@ svg {
   padding-block: 22px;
   border-block: 1px solid var(--line);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
 }
 .hero-location,
 .hero-scroll {
@@ -489,7 +489,7 @@ svg {
 .visual-bottomline {
   inset: auto 25px 20px;
   justify-content: space-between;
-  font-size: 7px;
+  font-size: 9px;
   letter-spacing: 1.4px;
 }
 .small-cross {
@@ -551,7 +551,7 @@ svg {
 }
 .node-caption {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 6px;
   display: block;
 }
@@ -641,7 +641,7 @@ h2 {
 }
 .section-description {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   margin-top: 12px;
 }
 .text-link {
@@ -835,7 +835,7 @@ h2 {
   transform: rotate(6deg);
 }
 .workflow-step > span {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.2px;
   text-align: center;
   white-space: nowrap;
@@ -848,11 +848,11 @@ h2 {
   justify-content: space-between;
   color: #acbdd8;
   font-family: monospace;
-  font-size: 7px;
+  font-size: 9px;
   letter-spacing: 1.3px;
 }
 .diagram-caption span:last-child {
-  font-size: 6px;
+  font-size: 8px;
 }
 .project-card-body {
   padding: 24px 25px 20px;
@@ -861,7 +861,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--subtle);
@@ -887,7 +887,7 @@ h2 {
   color: var(--accent);
 }
 .project-summary {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.85;
   color: var(--muted);
   min-height: 49px;
@@ -898,14 +898,14 @@ h2 {
   border-left: 2px solid color-mix(in srgb, var(--accent) 40%, var(--line));
 }
 .contribution-note > span {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 1px;
   color: var(--subtle);
   font-weight: 600;
 }
 .contribution-note p {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 5px;
   line-height: 1.8;
   min-height: 40px;
@@ -924,7 +924,7 @@ h2 {
   color: var(--muted);
   padding: 3px 8px;
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 11px;
 }
 .project-card-footer {
   display: flex;
@@ -943,7 +943,7 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -952,6 +952,10 @@ h2 {
   width: 5px;
   background: #b88328;
   border-radius: 50%;
+}
+.status[data-status="Completed"] > span,
+.status[data-status="Source available"] > span {
+  background: #279768;
 }
 .contributions-section {
   padding-top: 39px;
@@ -989,7 +993,7 @@ h2 {
   gap: 10px;
 }
 .small-label {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 1.1px;
   text-transform: uppercase;
   color: var(--muted);
@@ -1009,7 +1013,7 @@ h2 {
   background: #edf5ef;
   border: 1px solid #d9e9dd;
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 7px;
   white-space: nowrap;
 }
@@ -1020,7 +1024,7 @@ h2 {
 }
 .contribution-card p {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   max-width: 690px;
   margin-top: 9px;
 }
@@ -1037,7 +1041,7 @@ h2 {
 .contribution-tech {
   color: var(--subtle);
   font-family: monospace;
-  font-size: 10px;
+  font-size: 12px;
   margin-left: auto;
 }
 .skills-section {
@@ -1060,6 +1064,30 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--surface);
+}
+.skill-group,
+.certificate {
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+.certificate:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: var(--shadow);
+}
+@media (hover: hover) and (pointer: fine) {
+  .skill-group:hover,
+  .certificate:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    box-shadow: var(--shadow);
+  }
+  .certificate:hover {
+    transform: translateY(-3px);
+  }
+  .skill-group li:hover {
+    color: var(--ink);
+  }
 }
 .skill-group-heading {
   display: flex;
@@ -1099,9 +1127,10 @@ h2 {
   padding: 6px 0;
   border-radius: 7px;
   background: transparent;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--muted);
+  transition: color 0.18s;
 }
 .skill-icon {
   display: inline-flex;
@@ -1140,7 +1169,7 @@ h2 {
   margin-top: 24px;
 }
 .about-copy p {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.9;
   margin-top: 13px;
@@ -1175,7 +1204,7 @@ h2 {
   letter-spacing: -0.2px;
 }
 .principles p {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   line-height: 1.9;
   margin-top: 6px;
@@ -1220,7 +1249,7 @@ h2 {
 }
 .contact-section p:not(.eyebrow) {
   max-width: 460px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   margin-top: 18px;
 }
@@ -1245,24 +1274,49 @@ h2 {
 }
 .site-footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   padding-block: 33px;
   color: var(--subtle);
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 35px;
   border-top: 1px solid var(--line);
 }
-.site-footer > span:nth-child(2) {
+.footer-credit {
   margin-left: auto;
   margin-right: 35px;
+}
+.footer-emails {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  gap: 10px 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  font-style: normal;
+  font-size: 14px;
+}
+.footer-emails a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  color: var(--muted);
+}
+.footer-emails a > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.footer-emails a:hover {
+  color: var(--accent);
 }
 .footer-github {
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: 10px;
+  font-size: 12px;
 }
 .footer-github:hover {
   color: var(--accent);
@@ -1306,25 +1360,25 @@ h2 {
   border-radius: 4px;
   color: var(--accent);
   background: var(--accent-soft);
-  font-size: 10px;
+  font-size: 12px;
 }
 .certificate .credential-expiry {
-  font-size: 11px;
+  font-size: 13px;
 }
 .education {
   margin-top: 20px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.9;
 }
 .education + p {
   margin-top: 8px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .certificate p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 8px;
 }
 .certificate a {
@@ -1355,7 +1409,7 @@ h2 {
 }
 .case-summary {
   color: var(--muted);
-  font-size: 18px;
+  font-size: 20px;
   max-width: 680px;
   margin-top: 22px;
   line-height: 1.8;
@@ -1365,11 +1419,11 @@ h2 {
   align-items: center;
   gap: 22px;
   margin-top: 21px;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
 }
 .case-meta .status {
-  font-size: 11px;
+  font-size: 13px;
 }
 .case-study > .project-visual {
   height: 350px;
@@ -1384,7 +1438,7 @@ h2 {
   left: 90px;
 }
 .case-study > .project-visual .workflow-step > span {
-  font-size: 11px;
+  font-size: 13px;
 }
 .case-study > .project-visual .workflow-icon {
   width: 80px;
@@ -1399,7 +1453,7 @@ h2 {
 }
 .visual-caption {
   margin-top: 10px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--subtle);
   text-align: center;
 }
@@ -1421,7 +1475,7 @@ h2 {
   letter-spacing: -0.7px;
 }
 .case-section > p:not(.eyebrow) {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.9;
   margin-top: 18px;
@@ -1438,7 +1492,7 @@ h2 {
   display: flex;
   align-items: start;
   gap: 12px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.85;
 }
@@ -1465,7 +1519,7 @@ h2 {
   color: var(--muted);
 }
 .case-sidebar li {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.9;
   margin-top: 7px;
 }
@@ -1536,7 +1590,7 @@ h2 {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 4px 12px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--subtle);
 }
 .activity-meta > span {
@@ -1549,7 +1603,7 @@ h2 {
   margin-top: 7px;
 }
 .activity-content p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.85;
   color: var(--muted);
   margin-top: 7px;
@@ -1599,7 +1653,7 @@ h2 {
 }
 .project-preview .preview-help {
   margin-top: 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 .project-gallery img {
@@ -1617,7 +1671,7 @@ h2 {
 }
 .project-gallery figcaption {
   margin-top: 14px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   color: var(--muted);
 }
@@ -1679,7 +1733,7 @@ h2 {
     font-size: 12px;
   }
   .node-caption {
-    font-size: 8px;
+    font-size: 10px;
   }
   .node-icon {
     width: 36px;
@@ -1695,10 +1749,10 @@ h2 {
     left: 9%;
   }
   .hero-description {
-    font-size: 14px;
+    font-size: 16px;
   }
   .hero-footnote {
-    font-size: 8px;
+    font-size: 10px;
   }
   .workflow-diagram {
     gap: 18px;
@@ -1746,7 +1800,7 @@ h2 {
     margin-bottom: 19px;
   }
   .hero-description {
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 21px;
   }
   .hero-footnote {
@@ -1762,7 +1816,7 @@ h2 {
   }
   .visual-bottomline {
     inset: auto 16px 14px;
-    font-size: 5px;
+    font-size: 7px;
   }
   .visual-node {
     padding: 13px;
@@ -1772,7 +1826,7 @@ h2 {
     font-size: 10px;
   }
   .node-caption {
-    font-size: 7px;
+    font-size: 9px;
   }
   .node-label {
     font-size: 6px;
@@ -1812,7 +1866,7 @@ h2 {
     font-size: 29px;
   }
   .section-description {
-    font-size: 12px;
+    font-size: 14px;
     max-width: 450px;
   }
   .projects-grid {
@@ -1841,17 +1895,17 @@ h2 {
     height: 65px;
   }
   .workflow-step > span {
-    font-size: 6px;
+    font-size: 8px;
   }
   .project-card h3 {
     font-size: 21px;
   }
   .project-summary {
-    font-size: 12px;
+    font-size: 14px;
     min-height: 66px;
   }
   .project-meta {
-    font-size: 7px;
+    font-size: 9px;
   }
   .project-card-body {
     padding-inline: 20px;
@@ -1952,7 +2006,7 @@ h2 {
   }
   .hero-description {
     margin-top: 22px;
-    font-size: 14px;
+    font-size: 16px;
     max-width: 440px;
   }
   .hero-actions .button {
@@ -1960,14 +2014,14 @@ h2 {
     font-size: 11px;
   }
   .hero-footnote {
-    font-size: 8px;
+    font-size: 10px;
     margin-top: 27px;
   }
   .hero-meta {
     flex-wrap: wrap;
     gap: 14px 20px;
     padding-block: 18px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .hero-scroll {
     margin-left: 0;
@@ -1984,7 +2038,7 @@ h2 {
   }
   .visual-bottomline {
     inset: auto 20px 12px;
-    font-size: 6px;
+    font-size: 8px;
   }
   .visual-node {
     padding: 12px 16px;
@@ -1994,7 +2048,7 @@ h2 {
     font-size: 12px;
   }
   .node-caption {
-    font-size: 7px;
+    font-size: 9px;
   }
   .node-label {
     font-size: 6px;
@@ -2046,7 +2100,7 @@ h2 {
     letter-spacing: -1px;
   }
   .section-description {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.85;
   }
   .section-heading > .text-link {
@@ -2066,7 +2120,7 @@ h2 {
     width: 80px;
   }
   .workflow-step > span {
-    font-size: 8px;
+    font-size: 10px;
   }
   .workflow-step:not(:last-child)::after {
     width: 62px;
@@ -2084,7 +2138,7 @@ h2 {
     padding: 23px;
   }
   .project-meta {
-    font-size: 8px;
+    font-size: 10px;
   }
   .project-card h3 {
     font-size: 24px;
@@ -2092,7 +2146,7 @@ h2 {
   }
   .project-summary {
     min-height: 0;
-    font-size: 13px;
+    font-size: 15px;
   }
   .contribution-note p {
     min-height: 0;
@@ -2121,17 +2175,17 @@ h2 {
     margin-top: 11px;
   }
   .contribution-card p {
-    font-size: 12px;
+    font-size: 14px;
   }
   .small-label {
-    font-size: 8px;
+    font-size: 10px;
   }
   .small-label > span {
     display: block;
     margin: 2px 0 0;
   }
   .merged-badge {
-    font-size: 8px;
+    font-size: 10px;
     margin-top: 7px;
   }
   .contribution-links {
@@ -2140,7 +2194,7 @@ h2 {
   .contribution-tech {
     margin-left: 0;
     width: 100%;
-    font-size: 9px;
+    font-size: 11px;
   }
   .skills-section .section {
     padding-block: 43px;
@@ -2160,7 +2214,7 @@ h2 {
     gap: 7px;
   }
   .skill-group li {
-    font-size: 11px;
+    font-size: 13px;
   }
   .principles {
     padding-inline: 20px;
@@ -2174,7 +2228,7 @@ h2 {
     font-size: 32px;
   }
   .about-copy p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .principles article {
     padding-block: 19px;
@@ -2187,7 +2241,7 @@ h2 {
     letter-spacing: -1.2px;
   }
   .contact-section p:not(.eyebrow) {
-    font-size: 12px;
+    font-size: 14px;
   }
   .contact-decoration {
     right: -20px;
@@ -2203,16 +2257,16 @@ h2 {
     padding-block: 25px;
     gap: 14px;
     flex-wrap: wrap;
-    font-size: 9px;
+    font-size: 11px;
   }
-  .site-footer > span:nth-child(2) {
+  .footer-credit {
     order: 3;
     width: 100%;
     margin: -5px 0 0;
   }
   .footer-github {
     margin-left: auto;
-    font-size: 9px;
+    font-size: 11px;
   }
   .case-study {
     padding-top: 30px;
@@ -2226,15 +2280,15 @@ h2 {
     overflow-wrap: anywhere;
   }
   .case-summary {
-    font-size: 15px;
+    font-size: 17px;
     margin-top: 20px;
   }
   .case-meta {
-    font-size: 9px;
+    font-size: 11px;
     gap: 17px;
   }
   .case-meta .status {
-    font-size: 9px;
+    font-size: 11px;
   }
   .case-study > .project-visual {
     height: 250px;
@@ -2251,7 +2305,7 @@ h2 {
     height: 69px;
   }
   .case-study > .project-visual .workflow-step > span {
-    font-size: 8px;
+    font-size: 10px;
   }
   .case-study > .project-visual .workflow-step:not(:last-child)::after {
     top: 31px;
@@ -2273,7 +2327,7 @@ h2 {
     font-size: 26px;
   }
   .case-section > p:not(.eyebrow) {
-    font-size: 13px;
+    font-size: 15px;
   }
   .case-sidebar {
     padding: 25px 0 0;
@@ -2319,7 +2373,7 @@ h2 {
     font-size: 10px;
   }
   .node-caption {
-    font-size: 6px;
+    font-size: 8px;
   }
   .hero-visual {
     aspect-ratio: 0.9;
@@ -2328,7 +2382,7 @@ h2 {
     gap: 15px;
   }
   .workflow-step > span {
-    font-size: 7px;
+    font-size: 9px;
   }
   .workflow-step:not(:last-child)::after {
     width: 47px;
@@ -2340,7 +2394,7 @@ h2 {
     font-size: 22px;
   }
   .status {
-    font-size: 8px;
+    font-size: 10px;
   }
   .contribution-card {
     gap: 12px;
@@ -2362,6 +2416,75 @@ h2 {
     width: 47px;
   }
 }
+/* Content is visible by default, including without JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-reveal [data-reveal="left"] {
+    --reveal-x: -24px;
+    --reveal-y: 16px;
+  }
+  .scroll-reveal [data-reveal="right"] {
+    --reveal-x: 24px;
+    --reveal-y: 16px;
+  }
+  .scroll-reveal [data-reveal="scale"] {
+    --reveal-scale: 0.97;
+    --reveal-y: 20px;
+  }
+  .scroll-reveal [data-reveal-state="pending"] {
+    animation: none;
+    opacity: 0;
+    translate: var(--reveal-x, 0) var(--reveal-y, 28px);
+    scale: var(--reveal-scale, 1);
+  }
+  .scroll-reveal [data-reveal-state="revealed"] {
+    animation: scroll-reveal-in 700ms cubic-bezier(0.22, 1, 0.36, 1)
+      var(--reveal-delay, 0ms) both;
+  }
+  .scroll-reveal [data-reveal]:has(:focus-visible) {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    animation: none;
+  }
+}
+@media (min-width: 651px) {
+  .projects-grid > [data-reveal]:nth-child(even) {
+    --reveal-delay: 100ms;
+  }
+  .skills-grid > [data-reveal]:nth-child(2),
+  .certification-grid > [data-reveal]:nth-child(4n + 2) {
+    --reveal-delay: 70ms;
+  }
+  .skills-grid > [data-reveal]:nth-child(3),
+  .certification-grid > [data-reveal]:nth-child(4n + 3) {
+    --reveal-delay: 140ms;
+  }
+  .skills-grid > [data-reveal]:nth-child(4),
+  .certification-grid > [data-reveal]:nth-child(4n) {
+    --reveal-delay: 210ms;
+  }
+}
+@media (max-width: 650px) {
+  .scroll-reveal [data-reveal] {
+    --reveal-x: 0px;
+    --reveal-y: 20px;
+  }
+  .skills-grid > [data-reveal]:nth-child(even) {
+    --reveal-delay: 70ms;
+  }
+}
+@keyframes scroll-reveal-in {
+  from {
+    opacity: 0;
+    translate: var(--reveal-x, 0) var(--reveal-y, 28px);
+    scale: var(--reveal-scale, 1);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2373,6 +2496,7 @@ h2 {
     animation: none !important;
   }
   .project-card:hover,
+  .certificate:hover,
   .button-primary:hover {
     transform: none;
   }
