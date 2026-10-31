@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Icon } from "./icons";
-import type { IconName } from "./icons";
+import { Icon, type IconName } from "./icons";
 import type { Project } from "@/content/types";
 
 export function ProjectCover({
@@ -101,7 +100,16 @@ export function HeroVisual() {
   );
 }
 
-export function ProjectVisual({
+const projectIllustrations: Record<
+  Project["visual"],
+  { icons: IconName[]; caption: string }
+> = {
+  prism: { icons: ["phone", "layers", "code"], caption: "PRISM / GUARD" },
+  sis: { icons: ["code", "shield", "database"], caption: "FRIGHTON / SIS" },
+  itso: { icons: ["code", "branch", "database"], caption: "ITSO / EQUIPMENT" },
+};
+
+function ProjectVisual({
   variant,
   nodes,
   label,
@@ -110,16 +118,7 @@ export function ProjectVisual({
   nodes: string[];
   label: string;
 }) {
-  const icons: Record<Project["visual"], IconName[]> = {
-    prism: ["phone", "layers", "code"],
-    sis: ["code", "shield", "database"],
-    itso: ["code", "branch", "database"],
-  };
-  const captions: Record<Project["visual"], string> = {
-    prism: "PRISM / GUARD",
-    sis: "FRIGHTON / SIS",
-    itso: "ITSO / EQUIPMENT",
-  };
+  const { icons, caption } = projectIllustrations[variant];
   return (
     <div
       className={`project-visual project-visual-${variant}`}
@@ -138,7 +137,7 @@ export function ProjectVisual({
               className={`workflow-icon ${index === 1 ? "workflow-center" : ""}`}
             >
               <Icon
-                name={icons[variant][index % icons[variant].length]}
+                name={icons[index % icons.length]}
                 size={index === 1 ? 30 : 25}
               />
             </div>
@@ -147,7 +146,7 @@ export function ProjectVisual({
         ))}
       </div>
       <div className="diagram-caption">
-        <span>{captions[variant]}</span>
+        <span>{caption}</span>
         <span>WORKFLOW DIAGRAM</span>
       </div>
     </div>

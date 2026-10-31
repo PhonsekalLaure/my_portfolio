@@ -382,9 +382,8 @@ svg {
 .button-outline:hover {
   border-color: var(--accent);
   color: var(--accent);
+  background: var(--control-hover);
 }
-.button-quiet:hover,
-.button-outline:hover,
 .button-quiet:focus-visible,
 .button-outline:focus-visible {
   background: var(--control-hover);
@@ -976,92 +975,12 @@ h2 {
 .status[data-status="Source available"] > span {
   background: #279768;
 }
-.contributions-section {
-  padding-top: 39px;
-  padding-bottom: 76px;
-}
-.contribution-card {
-  display: flex;
-  gap: 27px;
-  padding: 30px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--surface);
-}
-.contribution-card + .contribution-card {
-  margin-top: 18px;
-}
-.contribution-symbol {
-  height: 68px;
-  width: 68px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  background: var(--accent-soft);
-  color: var(--accent);
-  border-radius: 12px;
-}
-.contribution-card-main {
-  flex: 1;
-  min-width: 0;
-}
-.contribution-topline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
 .small-label {
   font-size: 11px;
   letter-spacing: 1.1px;
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 600;
-}
-.small-label > span {
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: 0;
-  margin-left: 4px;
-}
-.merged-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: #376e55;
-  background: #edf5ef;
-  border: 1px solid #d9e9dd;
-  border-radius: 4px;
-  font-size: 11px;
-  padding: 2px 7px;
-  white-space: nowrap;
-}
-.contribution-card h3 {
-  font-size: 22px;
-  letter-spacing: -0.5px;
-  margin-top: 7px;
-}
-.contribution-card p {
-  color: var(--muted);
-  font-size: 15px;
-  max-width: 690px;
-  margin-top: 9px;
-}
-.contribution-links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 22px;
-  margin-top: 20px;
-}
-.contribution-links .text-link {
-  font-size: 10px;
-}
-.contribution-tech {
-  color: var(--subtle);
-  font-family: monospace;
-  font-size: 12px;
-  margin-left: auto;
 }
 .skills-section {
   background:
@@ -2009,16 +1928,6 @@ h2 {
   .contribution-note p {
     min-height: 60px;
   }
-  .contribution-card {
-    padding: 24px;
-    gap: 20px;
-  }
-  .contribution-topline {
-    flex-wrap: wrap;
-  }
-  .contribution-card h3 {
-    font-size: 20px;
-  }
   .skills-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 15px;
@@ -2280,47 +2189,8 @@ h2 {
   .project-card-footer {
     align-items: center;
   }
-  .contributions-section {
-    padding-top: 7px;
-  }
-  .contribution-card {
-    padding: 22px;
-    gap: 15px;
-  }
-  .contribution-symbol {
-    width: 40px;
-    height: 42px;
-    border-radius: 8px;
-  }
-  .contribution-symbol svg {
-    width: 22px;
-  }
-  .contribution-card h3 {
-    font-size: 19px;
-    line-height: 1.4;
-    margin-top: 11px;
-  }
-  .contribution-card p {
-    font-size: 14px;
-  }
   .small-label {
     font-size: 10px;
-  }
-  .small-label > span {
-    display: block;
-    margin: 2px 0 0;
-  }
-  .merged-badge {
-    font-size: 10px;
-    margin-top: 7px;
-  }
-  .contribution-links {
-    gap: 16px;
-  }
-  .contribution-tech {
-    margin-left: 0;
-    width: 100%;
-    font-size: 11px;
   }
   .skills-section .section {
     padding-block: 43px;
@@ -2521,13 +2391,6 @@ h2 {
   }
   .status {
     font-size: 10px;
-  }
-  .contribution-card {
-    gap: 12px;
-    padding: 18px;
-  }
-  .contribution-symbol {
-    display: none;
   }
   .contact-section h2 {
     font-size: 28px;

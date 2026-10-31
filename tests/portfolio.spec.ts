@@ -346,10 +346,23 @@ test("navigation supports keyboard, mobile dismissal, and case-study links", asy
     });
     await toggle.click();
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await page.locator(".hero-footnote").click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await toggle.click();
     await page.keyboard.press("Escape");
     await expect(
       page.getByRole("button", { name: "Open navigation" }),
     ).toBeFocused();
+    const viewport = page.viewportSize()!;
+    await toggle.click();
+    await page.setViewportSize({ width: 1100, height: viewport.height });
+    await expect(
+      page.getByRole("button", {
+        name: "Open navigation",
+        includeHidden: true,
+      }),
+    ).toHaveAttribute("aria-expanded", "false");
+    await page.setViewportSize(viewport);
     await toggle.click();
     await page
       .getByRole("navigation", { name: "Mobile navigation" })

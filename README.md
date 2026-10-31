@@ -25,13 +25,12 @@ Edit the appropriate file in **`src/content/`**:
 | `projects.ts`            | Project descriptions, individual contributions, technologies, evidence, and screenshots |
 | `project-activity.ts`    | Curated authored commits and merged pull requests shown on project pages                |
 | `project-screenshots.ts` | Selected PRISM-GUARD screenshot paths, dimensions, titles, and captions                 |
-| `contributions.ts`       | Contributions to other developers' repositories                                         |
 | `skills.ts`              | Resume skill categories, listed skills, and their supporting evidence                   |
 | `certifications.ts`      | Certification names, issuers, dates, and publication status                             |
 | `verification.ts`        | Shared verification date and the default unverified evidence record                     |
 | `types.ts`               | Shared TypeScript content types                                                         |
 
-`portfolio.ts` assembles these sections and provides the existing publication, navigation, and social-link helpers. Page and component imports can continue using it. All modules containing content remain server-only; do not import them into client components or pass entire records into them.
+`portfolio.ts` assembles these sections and provides publication, navigation, contact-email, and social-link helpers. All modules containing content remain server-only; do not import them into client components or pass entire records into them. Shared link rendering lives in `src/components/external-link.tsx`, and date formatting lives in `src/lib/dates.ts`.
 
 - Set a record's `publication` to `published` only after reviewing its claims and evidence. Draft projects have no public route and are absent from HTML, navigation, metadata, and the sitemap.
 - Profile email, secondary academic email, LinkedIn, education, location, and resume have been supplied by the owner. Email fields each contain one address; `linkedin` needs a full HTTPS URL. The resume is available at `/assets/resume.pdf`. `profile.ts` is checked against the shared `Profile` type so invalid publication states are caught by TypeScript.
@@ -43,7 +42,7 @@ Edit the appropriate file in **`src/content/`**:
 
 The favicon uses the owner's supplied Door pathway image in `src/app/icon.png`, resized to 256×256 with its transparency preserved. The header displays the owner's name as a text wordmark. The existing owner-supplied `profile.photo` is displayed in the hero through `next/image`; the workflow illustration remains the fallback when no photo is configured. See [brand mark notes](docs/brand-mark.md) for the asset details.
 
-The published content features PRISM-GUARD, Frighton University SIS, and ITSO Equipment Management. The external contribution to Marlo522/solarsoil is retained as a draft; its section and navigation link stay hidden while there are no published contributions. Public repositories, authored changes, and selected merged PRs were reviewed through authenticated GitHub CLI on 2026-10-30. Each project has a curated Selected changes section with direct commit/PR links; activity dates come from GitHub author dates or PR merge dates. Shared PRs are described using the user's individual changes, rather than all team output. No production-readiness or quantified outcome claims are made. The Frighton Library Management System remains a draft.
+The published content features PRISM-GUARD, Frighton University SIS, and ITSO Equipment Management. The external contribution to Marlo522/solarsoil is retained in `docs/archived-contributions.json`; its former section and navigation code have been removed. Public repositories, authored changes, and selected merged PRs were reviewed through authenticated GitHub CLI on 2026-10-30. Each project has a curated Selected changes section with direct commit/PR links; activity dates come from GitHub author dates or PR merge dates. Shared PRs are described using the user's individual changes, rather than all team output. No production-readiness or quantified outcome claims are made. The Frighton Library Management System remains a draft.
 
 The skills section includes all 29 entries from the owner's resume technical-skills screenshot supplied on 2026-10-31, grouped for the portfolio into Frontend, Backend & Data, Mobile, Tools & Workflow, and Additional Languages. Its evidence records identify the resume as the source. Technology icons use `simple-icons`, with local [Java](https://github.com/devicons/devicon/blob/master/icons/java/java-original.svg) and [Visual Studio Code](https://github.com/devicons/devicon/blob/master/icons/vscode/vscode-original.svg) SVGs from Devicon in `public/assets/skills/`.
 
@@ -68,7 +67,7 @@ public/assets/            Approved screenshots and final resume
 tests/                    Browser, privacy, route, theme, and accessibility checks
 ```
 
-Server Components render the portfolio; only navigation and theme controls require client JavaScript. Project pages are pre-rendered from published entries. Unknown/draft slugs return 404.
+Server Components render the portfolio. Navigation, theme controls, and the scroll-reveal wrapper use client JavaScript. Project pages are pre-rendered from published entries. Unknown/draft slugs return 404.
 
 ## Verification
 

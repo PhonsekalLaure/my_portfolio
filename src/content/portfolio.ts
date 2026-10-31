@@ -1,29 +1,21 @@
 import "server-only";
 import { profile } from "./profile";
 import { projects } from "./projects";
-import { contributions } from "./contributions";
 import { skills } from "./skills";
 import { certifications } from "./certifications";
 import type { Certification, PortfolioLink } from "./types";
 
 export type {
-  Publication,
-  Profile,
   PortfolioLink,
   Project,
-  ProjectActivity,
-  ProjectScreenshot,
-  Contribution,
   Certification,
   SkillGroup,
 } from "./types";
 
-// Compatibility entry point: edit content in the individual section files.
-// Keep draft records and evidence notes within Server Components.
+// Assemble content on the server; edit records in the individual section files.
 export const portfolio = {
   profile,
   projects,
-  contributions,
   skills,
   certifications,
 };
@@ -32,11 +24,8 @@ export function getPublishedProjects() {
   return portfolio.projects.filter((item) => item.publication === "published");
 }
 export function getPublishedProject(slug: string) {
-  return getPublishedProjects().find((item) => item.slug === slug);
-}
-export function getPublishedContributions() {
-  return portfolio.contributions.filter(
-    (item) => item.publication === "published",
+  return portfolio.projects.find(
+    (item) => item.publication === "published" && item.slug === slug,
   );
 }
 export function getPublishedSkills() {
@@ -49,20 +38,26 @@ export function getPublishedCertifications(): Certification[] {
       (b.issuedOn ?? b.year ?? "").localeCompare(a.issuedOn ?? a.year ?? ""),
     );
 }
-export function getSocialLinks(): PortfolioLink[] {
+export function getContactEmails() {
   return [
     ...(portfolio.profile.email
-      ? [{ label: "Email", href: `mailto:${portfolio.profile.email}` }]
+      ? [{ label: "Personal email", address: portfolio.profile.email }]
       : []),
     ...(portfolio.profile.secondaryEmail
       ? [
           {
             label: "Academic email",
-            href: `mailto:${portfolio.profile.secondaryEmail}`,
+            address: portfolio.profile.secondaryEmail,
           },
         ]
       : []),
-    { label: "GitHub", href: portfolio.profile.github },
+  ];
+}
+export function getSocialLinks(): PortfolioLink[] {
+  return [
+    ...(portfolio.profile.github
+      ? [{ label: "GitHub", href: portfolio.profile.github }]
+      : []),
     ...(portfolio.profile.linkedin
       ? [{ label: "LinkedIn", href: portfolio.profile.linkedin }]
       : []),
@@ -73,19 +68,18 @@ export function getNavigation() {
     ...(getPublishedProjects().length
       ? [{ label: "Projects", href: "/#projects" }]
       : []),
-    ...(getPublishedContributions().length
-      ? [{ label: "Contributions", href: "/#contributions" }]
-      : []),
     ...(getPublishedSkills().length
       ? [{ label: "Skills", href: "/#skills" }]
       : []),
-    ...(getPublishedCertifications().length
+    ...(portfolio.certifications.some(
+      (item) => item.publication === "published",
+    )
       ? [{ label: "Certifications", href: "/#certifications" }]
       : []),
     ...(portfolio.profile.about.length
       ? [{ label: "About", href: "/#about" }]
       : []),
-    ...(getSocialLinks().length
+    ...(getContactEmails().length || getSocialLinks().length
       ? [{ label: "Contact", href: "/#contact" }]
       : []),
   ];

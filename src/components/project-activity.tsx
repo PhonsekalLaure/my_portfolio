@@ -1,13 +1,7 @@
 import type { ProjectActivity as Activity } from "@/content/types";
 import { Icon } from "./icons";
-import { ExternalLink } from "./sections";
-
-const dateFormat = new Intl.DateTimeFormat("en", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: "UTC",
-});
+import { ExternalLink } from "./external-link";
+import { formatDate } from "@/lib/dates";
 
 export function ProjectActivity({ items }: { items: Activity[] }) {
   if (!items.length) return null;
@@ -37,9 +31,7 @@ export function ProjectActivity({ items }: { items: Activity[] }) {
             <div className="activity-content">
               <div className="activity-meta">
                 <span>{item.repository}</span>
-                <time dateTime={item.date}>
-                  {dateFormat.format(new Date(`${item.date}T00:00:00Z`))}
-                </time>
+                <time dateTime={item.date}>{formatDate(item.date)}</time>
               </div>
               <h3>{item.title}</h3>
               <p>{item.summary}</p>

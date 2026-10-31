@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { ReactNode } from "react";
 
 export type IconName =
   | "arrow"
@@ -17,7 +17,7 @@ export type IconName =
   | "branch"
   | "mail"
   | "download";
-const paths: Record<IconName, React.ReactNode> = {
+const paths: Record<IconName, ReactNode> = {
   arrow: (
     <>
       <path d="M4 12h15M13 6l6 6-6 6" />
@@ -98,12 +98,10 @@ export function Icon({
   name,
   size = 20,
   className,
-  style,
 }: {
   name: IconName;
   size?: number;
   className?: string;
-  style?: CSSProperties;
 }) {
   return (
     <svg
@@ -117,7 +115,6 @@ export function Icon({
       strokeLinejoin="round"
       aria-hidden="true"
       className={className}
-      style={style}
     >
       {paths[name]}
     </svg>

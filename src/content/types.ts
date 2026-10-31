@@ -75,16 +75,6 @@ export type Project = Publishable & {
   preview?: { title: string; url: string; description: string };
 };
 
-export type Contribution = Publishable & {
-  title: string;
-  project: string;
-  owner: string;
-  summary: string;
-  technologies: string[];
-  status: string;
-  links: PortfolioLink[];
-};
-
 export type Certification = Publishable & {
   name: string;
   issuer?: string;

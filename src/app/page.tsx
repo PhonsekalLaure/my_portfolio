@@ -4,7 +4,6 @@ import { ScrollReveal } from "@/components/scroll-reveal";
 import {
   portfolio,
   getPublishedProjects,
-  getPublishedContributions,
   getPublishedSkills,
   getPublishedCertifications,
 } from "@/content/portfolio";
@@ -12,13 +11,12 @@ import {
   Hero,
   SectionHeading,
   ProjectCard,
-  ContributionCard,
   SkillGroups,
   Certifications,
   About,
   Contact,
-  ExternalLink,
 } from "@/components/sections";
+import { ExternalLink } from "@/components/external-link";
 
 export const metadata: Metadata = getSiteUrl()
   ? { alternates: { canonical: "/" } }
@@ -26,7 +24,6 @@ export const metadata: Metadata = getSiteUrl()
 
 export default function Home() {
   const projects = getPublishedProjects();
-  const contributions = getPublishedContributions();
   const skills = getPublishedSkills();
   const certifications = getPublishedCertifications();
   return (
@@ -54,24 +51,6 @@ export default function Home() {
                 />
               ))}
             </div>
-          </section>
-        )}
-        {contributions.length > 0 && (
-          <section
-            id="contributions"
-            className="section container contributions-section"
-          >
-            <SectionHeading
-              eyebrow="Better together"
-              title="Beyond my own repositories."
-              description="Contributing to someone else’s codebase is a different kind of learning."
-            />
-            {contributions.map((contribution) => (
-              <ContributionCard
-                contribution={contribution}
-                key={contribution.project}
-              />
-            ))}
           </section>
         )}
         {skills.length > 0 && (

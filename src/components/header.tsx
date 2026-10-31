@@ -17,7 +17,8 @@ export function Header({
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const pathname = usePathname();
-  const currentSection = pathname === "/" ? activeSection : null;
+  const activeHref =
+    pathname === "/" && activeSection ? `/#${activeSection}` : undefined;
   const menuButton = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
 
@@ -31,29 +32,30 @@ export function Header({
 
     let frame = 0;
     let previous: string | null | undefined;
+    let marker = 0;
+    const bar = header.current?.querySelector(".header-inner");
 
-    function updateSection() {
-      frame = 0;
-      const bar = header.current?.querySelector(".header-inner");
+    function updateMarker() {
       const anchorOffset =
         Number.parseFloat(
           getComputedStyle(document.documentElement).scrollPaddingTop,
         ) || 0;
       // Anchor destinations must count as current even with a shorter header.
-      const marker = Math.max(
+      marker = Math.max(
         (bar?.getBoundingClientRect().bottom ?? 88) + 32,
         anchorOffset + 1,
       );
-      const positions = sections.map((section) => ({
-        id: section.id,
-        top: section.getBoundingClientRect().top,
-      }));
+      scheduleUpdate();
+    }
+
+    function updateSection() {
+      frame = 0;
       const atBottom =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2;
       let next: string | null = null;
-      for (const section of positions) {
-        if (section.top > marker) break;
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top > marker) break;
         next = section.id;
       }
       if (atBottom) next = sections[sections.length - 1].id;
@@ -68,41 +70,43 @@ export function Header({
       if (!frame) frame = window.requestAnimationFrame(updateSection);
     }
 
-    scheduleUpdate();
+    updateMarker();
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
+    window.addEventListener("resize", updateMarker);
     const contentResize = new ResizeObserver(scheduleUpdate);
     contentResize.observe(document.body);
 
     return () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
+      window.removeEventListener("resize", updateMarker);
       contentResize.disconnect();
     };
   }, [navigation, pathname]);
 
   useEffect(() => {
+    if (!open) return;
+
     function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape" && open) {
+      if (event.key === "Escape") {
         setOpen(false);
         menuButton.current?.focus();
       }
     }
     function onPointer(event: PointerEvent) {
-      if (open && !header.current?.contains(event.target as Node))
-        setOpen(false);
+      if (!header.current?.contains(event.target as Node)) setOpen(false);
     }
-    function onResize() {
-      if (window.innerWidth > 900) setOpen(false);
+    function onDesktop(event: MediaQueryListEvent) {
+      if (event.matches) setOpen(false);
     }
+    const desktop = window.matchMedia("(min-width: 901px)");
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onPointer);
-    window.addEventListener("resize", onResize);
+    desktop.addEventListener("change", onDesktop);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("pointerdown", onPointer);
-      window.removeEventListener("resize", onResize);
+      desktop.removeEventListener("change", onDesktop);
     };
   }, [open]);
 
@@ -132,11 +136,7 @@ export function Header({
               key={item.href}
               href={item.href}
               className={item.label === "Contact" ? "nav-contact" : ""}
-              aria-current={
-                currentSection === item.href.split("#")[1]
-                  ? "location"
-                  : undefined
-              }
+              aria-current={activeHref === item.href ? "location" : undefined}
             >
               {item.label}
               {item.label === "Contact" && <Icon name="external" size={14} />}
@@ -177,11 +177,7 @@ export function Header({
             key={item.href}
             href={item.href}
             onClick={() => setOpen(false)}
-            aria-current={
-              currentSection === item.href.split("#")[1]
-                ? "location"
-                : undefined
-            }
+            aria-current={activeHref === item.href ? "location" : undefined}
           >
             {item.label}
             <Icon name="arrow" size={16} />

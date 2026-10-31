@@ -4,9 +4,9 @@ import type { CSSProperties, ReactNode } from "react";
 import {
   portfolio,
   getPublishedProjects,
+  getContactEmails,
   getSocialLinks,
   type Certification,
-  type Contribution,
   type PortfolioLink,
   type Project,
   type SkillGroup,
@@ -14,30 +14,8 @@ import {
 import { Icon, type IconName } from "./icons";
 import { HeroVisual, ProjectCover } from "./project-visual";
 import { SkillIcon } from "./skill-icon";
-
-export function ExternalLink({
-  href,
-  children,
-  className = "text-link",
-  icon = "external",
-}: {
-  href: string;
-  children: ReactNode;
-  className?: string;
-  icon?: IconName;
-}) {
-  const external = /^https?:\/\//.test(href);
-  return (
-    <a
-      href={href}
-      className={className}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-    >
-      {children}
-      <Icon name={icon} size={17} />
-    </a>
-  );
-}
+import { ExternalLink } from "./external-link";
+import { formatDate } from "@/lib/dates";
 export function SectionHeading({
   eyebrow,
   title,
@@ -209,43 +187,6 @@ export function ProjectCard({
     </article>
   );
 }
-export function ContributionCard({
-  contribution,
-}: {
-  contribution: Contribution;
-}) {
-  return (
-    <article className="contribution-card" data-reveal="left">
-      <div className="contribution-symbol">
-        <Icon name="branch" size={30} />
-      </div>
-      <div className="contribution-card-main">
-        <div className="contribution-topline">
-          <span className="small-label">
-            {contribution.project}{" "}
-            <span>/ {contribution.owner}’s repository</span>
-          </span>
-          <span className="merged-badge">
-            <Icon name="check" size={13} />
-            {contribution.status}
-          </span>
-        </div>
-        <h3>{contribution.title}</h3>
-        <p>{contribution.summary}</p>
-        <div className="contribution-links">
-          {contribution.links.map((link) => (
-            <ExternalLink key={link.href} href={link.href}>
-              {link.label}
-            </ExternalLink>
-          ))}
-          <span className="contribution-tech">
-            {contribution.technologies.join(" · ")}
-          </span>
-        </div>
-      </div>
-    </article>
-  );
-}
 export function SkillGroups({ groups }: { groups: SkillGroup[] }) {
   const icons: IconName[] = ["code", "database", "phone", "branch", "code"];
   return (
@@ -307,13 +248,7 @@ function CertificationCard({ certificate }: { certificate: Certification }) {
         )}
         {certificate.expiresOn && (
           <p className="credential-expiry">
-            Valid until{" "}
-            {new Intl.DateTimeFormat("en", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-              timeZone: "UTC",
-            }).format(new Date(`${certificate.expiresOn}T00:00:00Z`))}
+            Valid until {formatDate(certificate.expiresOn)}
           </p>
         )}
         {certificate.verificationUrl && (
@@ -419,10 +354,9 @@ export function About() {
   );
 }
 export function Contact() {
-  const links = getSocialLinks();
-  const emails = links.filter((link) => link.href.startsWith("mailto:"));
-  const socialLinks = links.filter((link) => !link.href.startsWith("mailto:"));
-  if (!links.length) return null;
+  const emails = getContactEmails();
+  const socialLinks = getSocialLinks();
+  if (!emails.length && !socialLinks.length) return null;
   return (
     <section
       id="contact"
@@ -449,14 +383,10 @@ export function Contact() {
         </p>
         {emails.length > 0 && (
           <address className="contact-emails">
-            {emails.map((link) => (
-              <div className="contact-email" key={link.href}>
-                <span className="contact-email-label">
-                  {link.label === "Email" ? "Personal email" : link.label}
-                </span>
-                <span className="contact-email-value">
-                  {link.href.slice(7)}
-                </span>
+            {emails.map((email) => (
+              <div className="contact-email" key={email.address}>
+                <span className="contact-email-label">{email.label}</span>
+                <span className="contact-email-value">{email.address}</span>
               </div>
             ))}
           </address>

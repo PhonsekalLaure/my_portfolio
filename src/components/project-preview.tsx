@@ -1,5 +1,5 @@
 import type { Project } from "@/content/types";
-import { ExternalLink } from "./sections";
+import { ExternalLink } from "./external-link";
 
 export function ProjectPreview({ preview }: { preview?: Project["preview"] }) {
   if (!preview) return null;

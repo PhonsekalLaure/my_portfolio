@@ -56,14 +56,13 @@ export function ScrollReveal({ children }: { children: ReactNode }) {
         { rootMargin: "64px 0px", threshold: 0 },
       );
 
-      elements.forEach((element) => {
-        // Keep the initial viewport visible; only prepare content below it.
-        if (element.getBoundingClientRect().top < window.innerHeight - 32) {
-          element.dataset.revealState = "settled";
-        } else {
-          element.dataset.revealState = "pending";
-        }
-
+      // Read geometry before changing styles to avoid repeated layout flushes.
+      const initialStates = Array.from(elements, (element) => ({
+        element,
+        visible: element.getBoundingClientRect().top < window.innerHeight - 32,
+      }));
+      initialStates.forEach(({ element, visible }) => {
+        element.dataset.revealState = visible ? "settled" : "pending";
         observer?.observe(element);
         resetObserver?.observe(element);
       });
@@ -84,7 +83,17 @@ export function ScrollReveal({ children }: { children: ReactNode }) {
 
     prepare();
     // Live updates can replace keyed cards while this wrapper stays mounted.
-    const contentObserver = new MutationObserver(prepare);
+    const contentObserver = new MutationObserver((records) => {
+      const changed = records.some((record) =>
+        [...record.addedNodes, ...record.removedNodes].some(
+          (node) =>
+            node instanceof Element &&
+            (node.matches("[data-reveal]") ||
+              node.querySelector("[data-reveal]")),
+        ),
+      );
+      if (changed) prepare();
+    });
     contentObserver.observe(container, { childList: true, subtree: true });
     reducedMotion.addEventListener("change", prepare);
     container.addEventListener("focusin", onFocus);

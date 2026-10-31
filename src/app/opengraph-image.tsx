@@ -30,7 +30,7 @@ export default function OpenGraphImage() {
         }}
       >
         <span style={{ color: "#2855e8", fontSize: 45, fontWeight: 700 }}>
-          rr.
+          {portfolio.profile.initials}.
         </span>
         <span>IT STUDENT & SOFTWARE DEVELOPER</span>
       </div>

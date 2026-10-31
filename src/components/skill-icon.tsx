@@ -7,7 +7,6 @@ import {
   siCplusplus,
   siCss,
   siDocker,
-  siExpo,
   siExpress,
   siFigma,
   siFirebase,
@@ -24,13 +23,12 @@ import {
   siReact,
   siSupabase,
   siSwift,
-  siTailwindcss,
   siTypescript,
   type SimpleIcon,
 } from "simple-icons";
 import { Icon, type IconName } from "./icons";
 
-const logos: Record<string, SimpleIcon> = {
+const logos: Partial<Record<string, SimpleIcon>> = {
   JavaScript: siJavascript,
   TypeScript: siTypescript,
   Python: siPython,
@@ -42,10 +40,7 @@ const logos: Record<string, SimpleIcon> = {
   CSS: siCss,
   React: siReact,
   "React Native": siReact,
-  Expo: siExpo,
-  "Tailwind CSS": siTailwindcss,
   "Node.js": siNodedotjs,
-  Express: siExpress,
   "Express.js": siExpress,
   Supabase: siSupabase,
   PostgreSQL: siPostgresql,
@@ -59,15 +54,12 @@ const logos: Record<string, SimpleIcon> = {
   Figma: siFigma,
 };
 
-const localLogos: Record<string, string> = {
+const localLogos: Partial<Record<string, string>> = {
   Java: "/assets/skills/java.svg",
   "Visual Studio Code": "/assets/skills/visual-studio-code.svg",
 };
 
-const workflowIcons: Record<string, IconName> = {
-  SQL: "database",
-  "Pull requests": "branch",
-  "Code review": "code",
+const workflowIcons: Partial<Record<string, IconName>> = {
   "REST APIs": "code",
   "Database Administration": "database",
   "Software Testing": "check",
@@ -77,7 +69,7 @@ const workflowIcons: Record<string, IconName> = {
 export function SkillIcon({ name }: { name: string }) {
   const logo = logos[name];
   const localLogo = localLogos[name];
-  const monochrome = logo && ["expo", "express", "github"].includes(logo.slug);
+  const monochrome = logo?.slug === "express" || logo?.slug === "github";
 
   return (
     <span
