@@ -156,9 +156,36 @@ svg {
   white-space: nowrap;
 }
 .brand-name {
+  position: relative;
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.5px;
+}
+.brand-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0.16);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.brand:hover .brand-name::after,
+.brand:focus-visible .brand-name::after {
+  transform: scaleX(1);
+}
+.brand-surname {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.1em;
+  font-weight: 500;
+  font-style: italic;
+}
+.brand-period {
+  color: var(--accent);
 }
 .desktop-nav {
   display: flex;

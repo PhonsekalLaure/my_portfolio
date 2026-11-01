@@ -51,7 +51,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>
+      <body id="top">
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>

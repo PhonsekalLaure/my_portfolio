@@ -1,6 +1,6 @@
 # Brand mark and portrait
 
-The Door pathway symbol from Lord of the Mysteries is used for the favicon. The header displays the owner's name as a text wordmark, and their existing photo is in the hero.
+The Door pathway symbol from Lord of the Mysteries is used for the favicon. The header displays the owner's name as a text wordmark with a serif italic surname, an accent-colored period, and a short underline that expands on hover or keyboard focus. It links to the top of the homepage, including from case studies. Their existing photo is in the hero.
 
 `src/app/icon.png` uses the Door pathway image supplied by the owner on 2026-10-31. The original 2000×2000 PNG was resized to 256×256 for browser-tab use, preserving its colors, composition, and alpha transparency. It replaces the earlier custom SVG interpretation.
 

@@ -290,6 +290,53 @@ test("navigation tracks the reading position and resets on case studies", async 
   await expect(current).toHaveText("Projects");
 });
 
+test("navbar wordmark returns to the homepage top on every activation", async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const brand = page.getByRole("link", { name: "Ronn Rosarito", exact: true });
+  await expect(brand).toHaveAttribute("href", "/#top");
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await page
+      .locator("#skills")
+      .evaluate((section) => section.scrollIntoView({ behavior: "instant" }));
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(0);
+    if (testInfo.project.name !== "desktop") {
+      await page.getByRole("button", { name: "Open navigation" }).click();
+    }
+    await brand.click();
+    await expect(page).toHaveURL(/\/#top$/);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+    await expect(page.locator("#mobile-navigation")).toBeHidden();
+  }
+
+  await page.getByRole("link", { name: "View case study" }).first().click();
+  await expect(page).toHaveURL(/\/projects\/prism-guard$/);
+  await brand.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/#top$/);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+
+  await page.evaluate(() => document.fonts.ready);
+  for (const theme of ["light", "dark"]) {
+    await page.evaluate((value) => {
+      document.documentElement.dataset.theme = value;
+    }, theme);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+    await page.locator(".site-header").screenshot({
+      path: `.verification/navbar-${testInfo.project.name}-${theme}.png`,
+    });
+  }
+});
+
 test("theme follows the system until an explicit preference is saved", async ({
   page,
 }, testInfo) => {

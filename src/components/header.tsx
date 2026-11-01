@@ -14,6 +14,7 @@ export function Header({
   name: string;
   navigation: NavItem[];
 }) {
+  const [firstName, ...lastName] = name.split(" ");
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const pathname = usePathname();
@@ -127,8 +128,22 @@ export function Header({
   return (
     <header className="site-header" ref={header}>
       <div className="container header-inner">
-        <Link href="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-name">{name}</span>
+        <Link
+          href="/#top"
+          className="brand"
+          onClick={() => setOpen(false)}
+          onNavigate={() => {
+            // Repeated navigation to the same URL may preserve its scroll position.
+            if (pathname === "/") window.scrollTo({ top: 0, behavior: "auto" });
+          }}
+        >
+          <span className="brand-name">
+            {firstName}{" "}
+            <span className="brand-surname">{lastName.join(" ")}</span>
+            <span className="brand-period" aria-hidden="true">
+              .
+            </span>
+          </span>
         </Link>
         <nav aria-label="Main navigation" className="desktop-nav">
           {navigation.map((item) => (
