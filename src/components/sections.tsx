@@ -16,6 +16,7 @@ import { HeroVisual, ProjectCover } from "./project-visual";
 import { SkillIcon } from "./skill-icon";
 import { ExternalLink } from "./external-link";
 import { formatDate } from "@/lib/dates";
+import { HeroPortrait } from "./hero-portrait";
 export function SectionHeading({
   eyebrow,
   title,
@@ -100,18 +101,20 @@ export function Hero() {
           </div>
         </div>
         {p.photo ? (
-          <div className="hero-portrait" data-reveal="right">
-            <Image
-              className="hero-photo"
-              src={p.photo}
-              alt={`Portrait of ${p.name}`}
-              width={1254}
-              height={1254}
-              sizes="(max-width: 480px) calc(100vw - 64px), (max-width: 650px) 360px, (max-width: 1100px) 40vw, 420px"
-              loading="eager"
-              fetchPriority="high"
-            />
-          </div>
+          <HeroPortrait
+            photo={p.photo}
+            name={p.name}
+            projects={getPublishedProjects()
+              .slice(0, 3)
+              .map((project) => ({
+                slug: project.slug,
+                title: project.title,
+                category: project.category,
+                summary: project.summary,
+                technologies: project.technologies.slice(0, 3),
+                visual: project.visual,
+              }))}
+          />
         ) : (
           <HeroVisual />
         )}

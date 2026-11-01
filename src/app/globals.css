@@ -320,6 +320,21 @@ svg {
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse at 85% 35%, #0004, transparent 65%);
 }
+.cursor-trail {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 60;
+  pointer-events: none;
+  color: var(--accent);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cursor-trail {
+    display: block;
+  }
+}
 .hero {
   display: grid;
   grid-template-columns: 1.12fr 1fr;
@@ -462,9 +477,10 @@ svg {
 }
 .hero-portrait {
   width: 100%;
+  min-width: 0;
   max-width: 444px;
   justify-self: end;
-  padding: 11px;
+  padding: 12px;
   border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--line));
   border-radius: 26px;
   background: var(--surface);
@@ -472,11 +488,315 @@ svg {
     var(--card-shadow),
     0 24px 70px color-mix(in srgb, var(--accent) 9%, transparent);
 }
+.portrait-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px 15px;
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+}
+.portrait-topline svg {
+  color: var(--accent);
+}
+.portrait-window {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1;
+  min-height: 440px;
+  overflow: hidden;
+  border-radius: 15px;
+  background: var(--surface-soft);
+}
+.portrait-person,
+.portrait-work {
+  position: absolute;
+  inset: 0;
+  animation: portrait-unfold 450ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.portrait-person[hidden],
+.portrait-work[hidden] {
+  display: none;
+}
 .hero-photo {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 16px;
+  height: 100%;
+  object-fit: cover;
+}
+.portrait-note {
+  position: absolute;
+  top: 27px;
+  left: 15px;
+  padding: 12px 16px 10px;
+  background: #fffbea;
+  color: #403a2d;
+  border: 1px solid #d9cfaa;
+  box-shadow: 0 5px 14px #17203212;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(15px, 1.35vw, 19px);
+  font-style: italic;
+  line-height: 1.35;
+  transform: rotate(-7deg);
+}
+.portrait-note > span {
+  display: block;
+}
+.portrait-note svg {
+  position: absolute;
+  top: 75%;
+  left: 60%;
+  width: 76px;
+  height: 30px;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transform: rotate(20deg);
+}
+.portrait-peek {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--card-shadow);
+  font-size: 11px;
+}
+.portrait-peek:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.portrait-bottomline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 6px 4px;
+}
+.portrait-caption {
+  font-size: 11px;
+  line-height: 1.5;
+}
+.portrait-caption em {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+}
+.portrait-switch {
+  display: flex;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: var(--surface-soft);
+}
+.portrait-switch button {
+  min-height: 40px;
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 100px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.portrait-switch button[aria-pressed="true"] {
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  color: var(--accent);
+}
+.portrait-switch button:hover {
+  color: var(--accent);
+}
+.portrait-work {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  background:
+    radial-gradient(ellipse at 50% 15%, var(--accent-soft), transparent 75%),
+    var(--surface-soft);
+}
+.portrait-kicker {
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.portrait-map-heading > p {
+  margin-top: 9px;
+  font-size: 23px;
+  line-height: 1.25;
+  letter-spacing: -0.8px;
+}
+.portrait-map-heading em {
+  color: var(--accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+.portrait-map {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: space-around;
+  min-height: 110px;
+  margin-top: 15px;
+}
+.portrait-map-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+  overflow: visible;
+}
+.portrait-map-lines path {
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  opacity: 0.5;
+}
+.portrait-map-lines circle {
+  fill: currentColor;
+}
+.portrait-project-node {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.portrait-project-node:nth-of-type(2) {
+  margin-top: -8px;
+}
+.portrait-node-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform 200ms,
+    background-color 200ms,
+    color 200ms;
+}
+.portrait-project-node[aria-pressed="true"] .portrait-node-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  transform: rotate(-7deg);
+}
+.portrait-project-node:hover .portrait-node-icon {
+  transform: translateY(-3px);
+}
+.portrait-node-number {
+  font-family: monospace;
+  font-size: 9px;
+}
+.portrait-map-origin {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0 8px;
+  background: var(--surface-soft);
+  color: var(--accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-style: italic;
+}
+.portrait-project-detail {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.portrait-project-category {
+  color: var(--muted);
+  font-size: 9px;
+}
+.portrait-project-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.portrait-project-link:hover {
+  color: var(--accent);
+}
+.portrait-project-detail > p {
+  min-height: 54px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.portrait-project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.portrait-project-stack span {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 9px;
+}
+@keyframes portrait-unfold {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (max-width: 1100px) {
+  .portrait-work {
+    padding: 18px;
+  }
+  .portrait-bottomline {
+    flex-wrap: wrap;
+  }
+  .portrait-caption br {
+    display: none;
+  }
+  .portrait-caption em {
+    margin-left: 4px;
+  }
+}
+@media (max-width: 650px) {
+  .portrait-bottomline {
+    justify-content: center;
+    text-align: center;
+  }
+  .portrait-note {
+    font-size: 18px;
+  }
 }
 .hero-visual {
   background:

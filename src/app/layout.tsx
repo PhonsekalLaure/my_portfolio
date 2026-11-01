@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { portfolio, getNavigation } from "@/content/portfolio";
 import { Header } from "@/components/header";
+import { CursorTrail } from "@/components/cursor-trail";
 import { Footer } from "@/components/sections";
 import { getSiteUrl, isIndexable } from "@/lib/site";
 import "./globals.css";
@@ -52,6 +53,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body id="top">
+        <CursorTrail />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
