@@ -163,4 +163,25 @@ export const certifications: Certification[] = [
       ],
     },
   },
+  {
+    publication: "published",
+    name: "Gemini Certification for Students (K12)",
+    badgeImage: "/assets/credentials/gemini-certification-students-k12.png",
+    issuer: "Google for Education",
+    year: "2026",
+    issuedOn: "2026-11-09T14:01:24.000Z",
+    kind: "Certification",
+    expiresOn: "2029-11-09",
+    verificationUrl:
+      "https://edu.exceedlms.com/student/award/6qZGDzyPaYDvDfEFpSovvsew",
+    evidence: {
+      note: "Verified public certification awarded to Ronn Saimund Rosarito by Google for Education. The award page confirms completion on November 9, 2026, a passing score of 92, completion ID 488679644, and expiry on November 9, 2029. Card artwork comes from the official student certification pathway.",
+      verifiedOn: "2026-11-09",
+      references: [
+        "https://edu.exceedlms.com/student/award/6qZGDzyPaYDvDfEFpSovvsew",
+        "https://edu.exceedlms.com/student/path/1817885",
+        "https://storage.googleapis.com/exceedlms-external-uploads-production/uploads/resource_course_pictures/targets/4659683/w550/geminicertforstudents-cover.png",
+      ],
+    },
+  },
 ];

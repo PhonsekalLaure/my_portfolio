@@ -210,6 +210,7 @@ test("supplied profile links, credentials, and resume are usable", async ({
   await expect(
     page.locator("#certifications > .certification-grid h3"),
   ).toHaveText([
+    "Gemini Certification for Students (K12)",
     "PMI Project Management Ready™",
     "IT Specialist - Python",
     "Cisco Certified Support Technician Networking (CCST Networking) - Lifetime",
@@ -237,8 +238,25 @@ test("supplied profile links, credentials, and resume are usable", async ({
     );
     await expect(
       card.getByRole("link", { name: "Verify credential" }),
-    ).toHaveAttribute("href", /^https:\/\/www\.credly\.com\/badges\//);
+    ).toHaveAttribute(
+      "href",
+      /^https:\/\/(www\.credly\.com\/badges\/|edu\.exceedlms\.com\/student\/award\/)/,
+    );
   }
+  const gemini = certificates.filter({
+    has: page.getByRole("heading", {
+      name: "Gemini Certification for Students (K12)",
+      exact: true,
+    }),
+  });
+  await expect(gemini).toContainText("Google for Education · 2026");
+  await expect(gemini).toContainText("Valid until Nov 9, 2029");
+  await expect(
+    gemini.getByRole("link", { name: "Verify credential" }),
+  ).toHaveAttribute(
+    "href",
+    "https://edu.exceedlms.com/student/award/6qZGDzyPaYDvDfEFpSovvsew",
+  );
   const devnet = certificates.filter({
     has: page.getByRole("heading", { name: "DevNet Associate", exact: true }),
   });
