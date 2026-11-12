@@ -1,117 +1,84 @@
-# Ronn Rosarito — Developer Portfolio
+﻿# Ronn Saimund Rosarito
 
-A responsive, content-driven portfolio built with Next.js 16 App Router, React, TypeScript, and Tailwind CSS. Includes light/dark themes, published project case studies, verified credentials, social previews, and draft-safe content handling.
+**IT student & software developer**
 
-## Local development
+_Useful software. Thoughtfully built._
 
-Use Node.js 24 LTS and npm. The project was initially scaffolded using `create-next-app`; the original `it_portfolio_content_brief.md` is preserved.
+I'm Ronn, an Information Technology student at **FEU Institute of Technology**, specializing in **Web and Mobile Applications**, with graduation expected in July 2027. I build practical web and mobile applications that make complicated workflows easier to navigate.
 
-```powershell
-npm ci
-npm run dev
-```
+This repository is home to my personal portfolio: a collection of selected projects, individual contributions, technical skills, and credentials.
 
-Open http://localhost:3000. No database, API keys, authentication, or environment configuration is required for local use.
+**[Visit my portfolio](https://ronnsaimund.verce.app)** · [GitHub](https://github.com/PhonsekalLaure) · [LinkedIn](https://www.linkedin.com/in/rsrosarito/) · [Email](mailto:rosaritoronnsaimund@gmail.com)
 
-Development output is stored in `.next-dev`, separately from production output in `.next`. Production builds can run while the dev server is open. Stop the relevant server before moving or clearing its generated output; removing files from a running server can cause missing-manifest and Turbopack cache errors.
+## About me
 
-## Updating content
+I enjoy working where thoughtful interfaces meet dependable application logic. My work spans student information systems, equipment management, and security-agency operations, with a particular interest in backend development, databases, and the connections between web and mobile experiences.
 
-Edit the appropriate file in **`src/content/`**:
+I learn by building, testing, and reviewing code. In collaborative projects, I value clear responsibilities, useful feedback, and understanding the people and processes behind each feature.
 
-| File                     | Content                                                                                 |
-| ------------------------ | --------------------------------------------------------------------------------------- |
-| `profile.ts`             | Personal details, social/contact links, resume, education, About copy, and principles   |
-| `projects.ts`            | Project descriptions, individual contributions, technologies, evidence, and screenshots |
-| `project-activity.ts`    | Curated authored commits and merged pull requests shown on project pages                |
-| `project-screenshots.ts` | Selected PRISM-GUARD screenshot paths, dimensions, titles, and captions                 |
-| `skills.ts`              | Resume skill categories, listed skills, and their supporting evidence                   |
-| `certifications.ts`      | Certification names, issuers, dates, and publication status                             |
-| `verification.ts`        | Shared verification date and the default unverified evidence record                     |
-| `types.ts`               | Shared TypeScript content types                                                         |
+Three principles guide how I work:
 
-`portfolio.ts` assembles these sections and provides publication, navigation, contact-email, and social-link helpers. All modules containing content remain server-only; do not import them into client components or pass entire records into them. Shared link rendering lives in `src/components/external-link.tsx`, and date formatting lives in `src/lib/dates.ts`.
+- **Start with the workflow.** Understand the people and the process before deciding what to build.
+- **Build with intention.** Give interfaces, access rules, and error states the same consideration.
+- **Keep learning in public.** Use Git, pull requests, and code review to make the next iteration better.
 
-- Set a record's `publication` to `published` only after reviewing its claims and evidence. Draft projects have no public route and are absent from HTML, navigation, metadata, and the sitemap.
-- Profile email, secondary academic email, LinkedIn, education, location, and resume have been supplied by the owner. Email fields each contain one address; `linkedin` needs a full HTTPS URL. The resume is available at `/assets/resume.pdf`. `profile.ts` is checked against the shared `Profile` type so invalid publication states are caught by TypeScript.
-- Education and location have their own publication controls. Location is hidden by default.
-- Confirm certificate name, issuer, and year against the original record before publishing. `kind` distinguishes professional certifications from course completions; `issuedOn` stores the verified issue timestamp for newest-first sorting and optional `expiresOn` uses `YYYY-MM-DD`. `badgeImage` points to the original credential artwork saved locally under `public/assets/credentials/`; see [artwork sources](docs/credential-artwork.md). Public exam credential IDs are not needed. Use public verification links only.
-- Put approved, redacted screenshots in `public/assets/` and populate the project's `screenshots` array with local path, alt text, width, and height. Images render through `next/image`. Everything under `public/` is publicly accessible.
-- Put the final resume in `public/assets/` and set `profile.resume` to its path. There is no placeholder resume.
-- Empty content sections and their navigation links are omitted automatically. There is no contact form.
+## Selected projects
 
-The favicon uses the owner's supplied Door pathway image in `src/app/icon.png`, resized to 256×256 with its transparency preserved. The header displays the owner's name as a text wordmark. The existing owner-supplied `profile.photo` is displayed in the hero through `next/image`; the workflow illustration remains the fallback when no photo is configured. See [brand mark notes](docs/brand-mark.md) for the asset details.
+### PRISM-GUARD
 
-The published content features PRISM-GUARD, Frighton University SIS, and ITSO Equipment Management. The external contribution to Marlo522/solarsoil is retained in `docs/archived-contributions.json`; its former section and navigation code have been removed. Public repositories, authored changes, and selected merged PRs were reviewed through authenticated GitHub CLI on 2026-10-30. Each project has a curated Selected changes section with direct commit/PR links; activity dates come from GitHub author dates or PR merge dates. Shared PRs are described using the user's individual changes, rather than all team output. No production-readiness or quantified outcome claims are made. The Frighton Library Management System remains a draft.
+A completed collaborative academic capstone connecting security-agency administration, client operations, and guard-facing workflows across web and mobile.
 
-The skills section includes all 29 entries from the owner's resume technical-skills screenshot supplied on 2026-10-31, grouped for the portfolio into Frontend, Backend & Data, Mobile, Tools & Workflow, and Additional Languages. Its evidence records identify the resume as the source. Technology icons use `simple-icons`, with local [Java](https://github.com/devicons/devicon/blob/master/icons/java/java-original.svg) and [Visual Studio Code](https://github.com/devicons/devicon/blob/master/icons/vscode/vscode-original.svg) SVGs from Devicon in `public/assets/skills/`.
+I served as **project manager, database administrator, and lead developer with a backend focus**. My contributions include payroll review interfaces, mobile earnings screens, client management, deployment permissions, attendance contest evidence, and guard document submission.
 
-Eight owner-supplied credentials were verified on 2026-10-30 against Credly's public pages, Open Badges assertions, and issuer badge classes. All eight public pages name Ronn Saimund Rosarito. The four professional certifications are IT Specialist - Python, IT Specialist - Databases, PMI Project Management Ready, and Cisco CCST Networking - Lifetime. DevNet Associate and the three CCNA-named badges are course completions. PMI expires on 2031-03-17; the linked CCST badge is the Lifetime version. Verification references are stored in the server-only credential records.
+**Technologies:** React, React Native, Expo, Express, Supabase
 
-The PRISM-GUARD web and promotional links were taken from public repository homepage metadata and checked for successful redirects. These are public previews; a successful page response does not establish that every backend workflow is available. No GitHub API calls, credentials, or live contribution counters are needed at runtime. See `docs/project-evidence.md` for the content review record.
+[Web repository](https://github.com/PhonsekalLaure/prism-guard-web) · [Mobile repository](https://github.com/PhonsekalLaure/prism-guard-mobile) · [Promotional website](https://psiai.vercel.app/)
 
-Project illustrations are simplified workflow diagrams, not screenshots or live dashboards.
+### Frighton University SIS
 
-PRISM-GUARD's case study embeds the public promotional site at `https://psiai.vercel.app/` in a responsive, lazy-loaded iframe with an Open website fallback link. Edit the optional `preview` object in `projects.ts` to change its title, URL, or description. Only add sites that permit embedding. The operations app requires an account and blocks framing; its security headers have not been changed.
+An in-progress collaborative student information system covering student portal workflows and administrative account management.
 
-The case study also includes four owner-supplied screenshots: web payroll and client management, mobile earnings, and mobile profile/documents. The owner confirmed the visible names, contact details, and amounts are demo data and safe to publish. Selected files are in `public/assets/projects/prism-guard/web/` and `mobile/`, with editable records in `src/content/project-screenshots.ts`. Original pixels and dimensions are preserved. Images are optimized through `next/image` and link to the full-size PNG. The other 26 screenshots are renamed and retained locally under `.asset-sources/prism-guard/web/` and `mobile/`, outside public assets and ignored by Git. Back up that local folder separately if needed; it will not be included in a clone. Other projects' empty galleries remain hidden.
+My contributions include authenticated student APIs, admin account lifecycle workflows, database migrations, and audit logging. The project separates student records from administrative account responsibilities.
 
-## Project structure
+**Technologies:** TypeScript, React, Express, Supabase, PostgreSQL
 
-```text
-src/app/                  Homepage, project routes, metadata, 404, and global styles
-src/components/           Reusable sections, cards, navigation, icons, diagrams
-src/content/             Separate typed content files; portfolio.ts assembles them
-src/lib/site.ts           Production URL and indexing configuration
-public/assets/            Approved screenshots and final resume
-tests/                    Browser, privacy, route, theme, and accessibility checks
-```
+[Repository](https://github.com/PhonsekalLaure/frighton-university-sis)
 
-Server Components render the portfolio. Navigation, theme controls, and the scroll-reveal wrapper use client JavaScript. Project pages are pre-rendered from published entries. Unknown/draft slugs return 404.
+### ITSO Equipment Management
 
-## Verification
+A web application for equipment inventory, reservations, borrowing, and returns.
 
-```powershell
-npm run lint
-npm run typecheck
-npm run format:check
-npm run build
-```
+I implemented inventory and borrow tracking, reservation soft deletion, status filtering, and inventory restoration rules to keep equipment availability aligned with reservation activity.
 
-Run browser tests after `npm run build`. Playwright starts a fresh production server on port 3100, separate from the usual development/preview port 3000, and stops it after the suite. It deliberately does not reuse an existing server, so verification exercises the production build rather than a development session.
+**Technologies:** PHP, CodeIgniter, JavaScript
 
-```powershell
-npx playwright install chromium
-npm run test:e2e
-```
+[Repository](https://github.com/PhonsekalLaure/itso)
 
-Alternatively, use an installed Google Chrome browser without downloading Chromium:
+## Technical toolkit
 
-```powershell
-$env:PLAYWRIGHT_CHANNEL='chrome'
-npm run test:e2e
-```
+| Area                 | Technologies and skills                                                                                          |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Frontend             | HTML, CSS, JavaScript, TypeScript, React                                                                         |
+| Backend & data       | Node.js, Express.js, PHP, CodeIgniter, PostgreSQL, MySQL, Supabase, Firebase, REST APIs, database administration |
+| Mobile               | React Native, Kotlin, Swift                                                                                      |
+| Tools & workflow     | Git, GitHub, Visual Studio Code, Docker, Composer, Figma, software testing, technical documentation              |
+| Additional languages | Python, Java, C++                                                                                                |
 
-Checks cover desktop, tablet, and mobile widths; light/dark themes; system theme and persistence; reduced motion; keyboard navigation and mobile-menu dismissal; published/draft routes; server-rendered draft exclusions; link attributes; social preview generation; and axe WCAG A/AA accessibility checks. Screenshots are saved under the ignored `.verification/` directory.
+## Certifications & learning
 
-Run the production preview on the dedicated verification port before auditing. Keep port 3100 free while the browser suite is running, since that suite manages its own server.
+- **Gemini Certification for Students (K12)** — Google for Education
+- **PMI Project Management Ready™** — Project Management Institute
+- **Cisco Certified Support Technician Networking (CCST Networking) - Lifetime** — Cisco
+- **IT Specialist - Python** — Certiport
+- **IT Specialist - Databases** — Certiport
 
-```powershell
-npm run start -- --hostname 127.0.0.1 --port 3100
-# In a second terminal:
-npm run audit:lighthouse
-```
+I've also completed Cisco courses in DevNet Associate, Introduction to Networks, Switching, Routing, and Wireless Essentials, and Enterprise Networking, Security, and Automation. Credential details and verification links are available in my portfolio.
 
-Lighthouse writes local HTML and JSON reports under `.verification/`. If Chrome is not discovered, set `CHROME_PATH` to its executable. Local Lighthouse SEO scores reflect intentional `noindex` until a production origin is configured.
+## Let's connect
 
-## Vercel deployment
+Explore my work through the portfolio, browse my contributions on GitHub, or reach out by email.
 
-1. Push this repository to your GitHub account. No remote is guessed or created automatically.
-2. In Vercel, import that repository. Use the **Next.js** preset, repository root directory, `npm run build` build command, and default output directory. Use Node.js 24.x. The dependency lockfile is committed with the source.
-3. Review the initial deployment. Until `SITE_URL` is set, robots and page metadata disable indexing; there is no invented canonical URL.
-4. Copy the actual assigned HTTPS production origin into Vercel's **Production** environment as `SITE_URL`, without a path. Redeploy so static metadata and the sitemap are regenerated.
-5. Verify the live homepage, both case studies, theme/menu behavior, social preview, canonical URLs, robots, and sitemap. Preview deployments remain `noindex`, even when a production origin is available.
-
-Copy `.env.example` to `.env.local` only if you need to exercise production-origin metadata locally. `SITE_URL` must be an HTTPS origin with no credentials, path, query, or fragment. Local and preview builds never substitute a guessed Vercel address. Do not commit environment credentials.
-
-Custom domains, analytics, a CMS, a blog, and message delivery are outside the initial version.
+- [Portfolio](https://ronnsaimund.verce.app)
+- [GitHub](https://github.com/PhonsekalLaure)
+- [LinkedIn](https://www.linkedin.com/in/rsrosarito/)
+- [rosaritoronnsaimund@gmail.com](mailto:rosaritoronnsaimund@gmail.com)
